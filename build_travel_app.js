@@ -3,8 +3,10 @@ const path = require('path');
 
 const outDir = process.cwd();
 const imgDir = path.join(outDir, 'images');
+const galleryDir = path.join(imgDir, 'gallery');
 const iconDir = path.join(outDir, 'icons');
 fs.mkdirSync(imgDir, { recursive: true });
+fs.mkdirSync(galleryDir, { recursive: true });
 fs.mkdirSync(iconDir, { recursive: true });
 for (const file of fs.readdirSync(iconDir)) fs.unlinkSync(path.join(iconDir, file));
 
@@ -44,6 +46,7 @@ const hikes = [
     shorter: 'Drive to Savica parking and do only the waterfall out-and-back, about 1.5 km and 150 m up.',
     emergency: 'Call 112. For mountain rescue ask for GRS; note your nearest landmark: Slap Savica / Ukanc.',
     imageQuery: 'Savica Waterfall Slovenia Bohinj',
+    galleryQueries: ['Savica Waterfall Bohinj', 'Slap Savica Slovenia', 'Ukanc Lake Bohinj', 'Lake Bohinj Ukanc', 'Bohinj Savica waterfall', 'Bohinj lakeshore'],
     pois: {
       waterfalls: [{name:'Savica Waterfall', lat:46.29298, lon:13.79417}],
       viewpoints: [{name:'Savica viewpoint', lat:46.29267, lon:13.79455},{name:'Ukanc lake view', lat:46.28065, lon:13.82787}],
@@ -87,6 +90,7 @@ const hikes = [
     shorter: 'Ride up, enjoy the upper-station viewpoint and return without the Orlove glave extension.',
     emergency: 'Call 112. Give location as Vogel ski area / upper cable car station or nearest lift name.',
     imageQuery: 'Vogel Bohinj cable car Lake Bohinj',
+    galleryQueries: ['Vogel Bohinj cable car', 'Vogel ski resort Bohinj', 'Lake Bohinj from Vogel', 'Julian Alps Vogel', 'Orlove glave Vogel', 'Vogel Slovenia'],
     pois: {
       viewpoints: [{name:'Vogel upper viewpoint', lat:46.26058, lon:13.84259},{name:'Orlove glave viewpoint', lat:46.25392, lon:13.83289}],
       huts: [{name:'Viharnik / Vogel upper station', lat:46.26083, lon:13.84287},{name:'Merjasec mountain restaurant', lat:46.25763, lon:13.83895}],
@@ -129,6 +133,7 @@ const hikes = [
     shorter: 'Walk only the gorge loop to the main bridges and elephant rock, then return, about 3-5 km.',
     emergency: 'Call 112. State Mostnica gorge, Voje Valley or Koča na Vojah depending on location.',
     imageQuery: 'Mostnica Gorge Bohinj Slovenia',
+    galleryQueries: ['Mostnica Gorge Bohinj', 'Mostnica Korita Slovenia', 'Voje Valley Bohinj', 'Koča na Vojah', 'Mostnica waterfall', 'Stara Fuzina Mostnica'],
     pois: {
       waterfalls: [{name:'Mostnica / Voje waterfall', lat:46.32091, lon:13.89630}],
       viewpoints: [{name:'Mostnica gorge bridge', lat:46.29930, lon:13.88958},{name:'Voje meadow view', lat:46.31251, lon:13.89433}],
@@ -172,6 +177,7 @@ const hikes = [
     shorter: 'Turn around at the first open pasture/lake viewpoint if energy drops; the same route returns to the car.',
     emergency: 'Call 112. Give Planina Blato road or Koča na Planini pri Jezeru as location.',
     imageQuery: 'Planina pri Jezeru Bohinj',
+    galleryQueries: ['Planina pri Jezeru Bohinj', 'Koča na Planini pri Jezeru', 'Planina Blato Bohinj', 'Triglav Lakes Valley Planina pri Jezeru', 'Bohinj alpine pasture', 'Planina pri Jezeru lake'],
     pois: {
       viewpoints: [{name:'Planina pri Jezeru lake view', lat:46.32054, lon:13.83767},{name:'Planina Blato pasture', lat:46.30015, lon:13.84990}],
       huts: [{name:'Koča na Planini pri Jezeru', lat:46.32092, lon:13.83720}],
@@ -214,6 +220,7 @@ const hikes = [
     shorter: 'Turn around at the pasture entrance viewpoint and skip walking the full hut-line.',
     emergency: 'Call 112. State Pokljuka / Uskovnica / Planina Zajamniki.',
     imageQuery: 'Planina Zajamniki Pokljuka Slovenia',
+    galleryQueries: ['Planina Zajamniki', 'Zajamniki Pokljuka', 'Pokljuka alpine pasture', 'Uskovnica Slovenia', 'Planina Zajamniki shepherd huts', 'Julian Alps Pokljuka'],
     pois: {
       viewpoints: [{name:'Zajamniki classic viewpoint', lat:46.33708, lon:13.95336},{name:'Pasture entrance view', lat:46.34145, lon:13.93874}],
       huts: [{name:'Planina Zajamniki shepherd huts', lat:46.33708, lon:13.95336}],
@@ -256,6 +263,7 @@ const hikes = [
     shorter: 'Visit only the lower waterfall viewpoint from the parking area and skip the upper/behind route.',
     emergency: 'Call 112. State Slap Peričnik / Vrata Valley near Mojstrana.',
     imageQuery: 'Pericnik Waterfall Slovenia',
+    galleryQueries: ['Peričnik waterfall', 'Pericnik Waterfall Slovenia', 'Slap Peričnik', 'Vrata Valley Slovenia', 'Mojstrana Peričnik', 'Triglav National Park Peričnik'],
     pois: {
       waterfalls: [{name:'Lower Peričnik Waterfall', lat:46.43984, lon:13.89505},{name:'Upper Peričnik Waterfall', lat:46.44050, lon:13.89553}],
       viewpoints: [{name:'Lower fall front viewpoint', lat:46.43984, lon:13.89505},{name:'Behind waterfall path', lat:46.43998, lon:13.89522}],
@@ -495,6 +503,10 @@ function xmlEscape(s) {
   return String(s).replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&apos;','"':'&quot;'}[c]));
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function makeIcon(size) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#0b7a75"/><path d="M88 344l90-118 58 72 82-118 106 164H88z" fill="#fff"/><circle cx="346" cy="144" r="42" fill="#ffd166"/><path d="M126 366h260" stroke="#fff" stroke-width="24" stroke-linecap="round"/></svg>`;
   fs.writeFileSync(path.join(iconDir, `icon-${size}.svg`), svg);
@@ -564,6 +576,180 @@ async function downloadPhoto(hike) {
   }
 }
 
+async function downloadGallery(hike, targetCount = 7) {
+  const forcedGalleryFiles = {
+    'savica-lakeshore': [
+      'Bohinj Savica-Wasserfall 1.JPG',
+      'Bohinj Savica-Wasserfall 2.JPG',
+      'Bohinj Savica-Wasserfall 3.JPG',
+      '2025 View from Savica waterfall towards the lake.jpg',
+      'An afternoon at lake Bohinj.jpg',
+      'Lake Bohinj.jpg',
+      'Ukanc - slap Savica.jpg'
+    ],
+    'vogel-panorama': [
+      'Triglav-izVogla.jpg',
+      'Vogel2.jpg',
+      'Vogel3.JPG',
+      'Vogel4.jpg',
+      'Slovenia-41 (40113769855).jpg',
+      'Cows at Merjasec - panoramio.jpg',
+      'Berg Panorama mit Bohinjsko jezero im Hintergrund (51588899882).jpg'
+    ],
+    'mostnica-voje': [
+      'Mostnica 2.jpg',
+      'Mostnica 3.jpg',
+      'Mostnica river.jpg',
+      'Mostnica-Voje2.JPG',
+      'Mostnica.jpg',
+      'Dolina Voje.jpg',
+      'Tosc-Voje2.JPG'
+    ],
+    'planina-blato-jezeru': [
+      'Planinska pot.jpg',
+      'Cow on the way to the Double lake in the Valley of the seven lakes in Triglav National Park.jpg',
+      'Alpine landscape panorama in the evening (52340854025).jpg',
+      'Autumn scene in the Bohinj Valley 31102016-002.jpg',
+      'Mountain pastures at Pokljuka plateau, Julian alps (52339467762).jpg',
+      'Autumn in the valley of the seven lakes in Julian Alps.jpg',
+      'Panorama of the valley of the Triglav mountain massif.jpg',
+      'Bergpanorama mit Bohinjsko jezero im Hintergrund (51589730876).jpg',
+      'Autumn scene in the Bohinj Valley.jpg'
+    ],
+    'planina-zajamniki': [
+      'Mountain pastures at Pokljuka plateau, Julian alps (52339467762).jpg',
+      'Alpine landscape panorama in the evening (52340854025).jpg',
+      'Autumn scene in the Bohinj Valley 31102016-002.jpg',
+      'Beautiful view of traditional wooden cabins in the idyllic Slovenian mountains (52340853580).jpg',
+      'Mountain pastures at Pokljuka plateau, Julian alps (52340727204).jpg',
+      'Couple observes the rural mountain landscape (52340724674).jpg',
+      'Long asphalt countryside road between spruce forest trees. Amazing forest landscape, Pokljuka plateau, Slovenia in summer season. Low angle, long shot (52340856850).jpg',
+      'Pokljuka (12912100613).jpg',
+      'Asphalt road under pokljuka in autumn (52340663173).jpg'
+    ],
+    'pericnik-waterfall': [
+      'BurgerPericnikPoleti.jpg',
+      '2016 Peričnik Falls.JPG',
+      'Cascate Peričnik (48681642918).jpg',
+      'Cascate Peričnik (48681682878).jpg',
+      'Cascate Peričnik (48681979136).jpg',
+      'Morning Peričnik.jpg',
+      'Pericnik falls.jpg'
+    ]
+  };
+  const dir = path.join(galleryDir, hike.id);
+  fs.mkdirSync(dir, { recursive: true });
+  const existing = fs.readdirSync(dir)
+    .filter(file => /\.(jpe?g|png|webp|svg)$/i.test(file))
+    .map(file => ({ asset: `images/gallery/${hike.id}/${file}`, title: file.replace(/\.[^.]+$/, '').replace(/^\d+-/, '').replaceAll('-', ' ') }));
+  if (existing.length >= 5) {
+    hike.gallery = existing.slice(0, 10);
+    return;
+  }
+
+  const gallery = [...existing];
+  let index = gallery.length + 1;
+  for (const title of forcedGalleryFiles[hike.id] || []) {
+    if (gallery.length >= targetCount) break;
+    try {
+      await sleep(700);
+      const url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(title)}?width=500`;
+      const res = await fetch(url, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } });
+      const type = res.headers.get('content-type') || '';
+      if (!res.ok || !type.startsWith('image/')) continue;
+      const ext = type.includes('png') ? 'png' : type.includes('webp') ? 'webp' : 'jpg';
+      const filename = `${String(index).padStart(2, '0')}-${hike.id}.${ext}`;
+      const rel = `images/gallery/${hike.id}/${filename}`;
+      const full = path.join(outDir, rel);
+      if (!fs.existsSync(full)) {
+        const buf = Buffer.from(await res.arrayBuffer());
+        if (buf.length < 1000) continue;
+        fs.writeFileSync(full, buf);
+      }
+      gallery.push({ asset: rel, title });
+      index++;
+    } catch (e) {
+      console.warn(`Forced gallery image failed for ${hike.id}: ${title}: ${e.message}`);
+    }
+  }
+  if (gallery.length >= targetCount) {
+    hike.gallery = gallery.slice(0, 10);
+    return;
+  }
+
+  const seenTitles = new Set();
+  const candidates = [];
+  for (const query of hike.galleryQueries || [hike.imageQuery]) {
+    if (candidates.length >= targetCount * 2) break;
+    const api = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query + ' filetype:bitmap')}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=900&format=json&origin=*`;
+    try {
+      const data = await (await fetch(api, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } })).json();
+      const pages = Object.values(data.query?.pages || {});
+      for (const page of pages) {
+        const info = page.imageinfo?.[0];
+        if (!info || seenTitles.has(page.title)) continue;
+        const url = info.thumburl || info.url;
+        if (!url) continue;
+        seenTitles.add(page.title);
+        candidates.push({ url, title: page.title.replace(/^File:/, '') });
+      }
+    } catch (e) {
+      console.warn(`Gallery search failed for ${hike.id}: ${query}: ${e.message}`);
+    }
+  }
+
+  for (const candidate of candidates) {
+    if (gallery.length >= targetCount) break;
+    try {
+      await sleep(700);
+      const res = await fetch(candidate.url, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } });
+      const type = res.headers.get('content-type') || '';
+      if (!res.ok || !type.startsWith('image/')) continue;
+      const ext = type.includes('png') ? 'png' : type.includes('webp') ? 'webp' : 'jpg';
+      const filename = `${String(index).padStart(2, '0')}-${hike.id}.${ext}`;
+      const rel = `images/gallery/${hike.id}/${filename}`;
+      const buf = Buffer.from(await res.arrayBuffer());
+      if (buf.length < 1000) continue;
+      fs.writeFileSync(path.join(outDir, rel), buf);
+      gallery.push({ asset: rel, title: candidate.title });
+      index++;
+    } catch (e) {
+      console.warn(`Gallery image failed for ${hike.id}: ${e.message}`);
+    }
+  }
+
+  if (gallery.length < 5 && hike.image) gallery.unshift({ asset: hike.image, title: hike.title });
+  const unique = [];
+  const seen = new Set();
+  for (const item of gallery) {
+    if (seen.has(item.asset)) continue;
+    seen.add(item.asset);
+    unique.push(item);
+  }
+  const fallbackGalleryAssets = {
+    'planina-blato-jezeru': ['images/planina-blato-jezeru.jpg', 'images/planina-zajamniki.jpg', 'images/vogel-panorama.jpg', 'images/gallery/planina-zajamniki/01-planina-zajamniki.jpg'],
+    'planina-zajamniki': ['images/planina-zajamniki.jpg', 'images/planina-blato-jezeru.jpg', 'images/vogel-panorama.jpg', 'images/gallery/planina-blato-jezeru/01-planina-blato-jezeru.jpg', 'images/gallery/planina-blato-jezeru/02-planina-blato-jezeru.jpg'],
+    'mostnica-voje': ['images/mostnica-voje.jpg', 'images/savica-lakeshore.jpg'],
+    'pericnik-waterfall': ['images/pericnik-waterfall.jpg'],
+    'vogel-panorama': ['images/vogel-panorama.jpg', 'images/planina-zajamniki.jpg'],
+    'savica-lakeshore': ['images/savica-lakeshore.jpg', 'images/mostnica-voje.jpg']
+  };
+  let fallbackIndex = unique.length + 1;
+  for (const asset of fallbackGalleryAssets[hike.id] || []) {
+    if (unique.length >= 5) break;
+    const source = path.join(outDir, asset);
+    if (!fs.existsSync(source) || seen.has(asset)) continue;
+    const ext = path.extname(asset) || '.jpg';
+    const rel = `images/gallery/${hike.id}/${String(fallbackIndex).padStart(2, '0')}-fallback-${hike.id}${ext}`;
+    fs.copyFileSync(source, path.join(outDir, rel));
+    unique.push({ asset: rel, title: path.basename(asset, ext) });
+    seen.add(asset);
+    seen.add(rel);
+    fallbackIndex++;
+  }
+  hike.gallery = unique.slice(0, 10);
+}
+
 async function downloadGpx(hike) {
   const lonlats = hike.route.map(p => p.join(',')).join('|');
   const url = `https://brouter.de/brouter?lonlats=${encodeURIComponent(lonlats)}&profile=hiking-beta&alternativeidx=0&format=gpx`;
@@ -588,7 +774,13 @@ async function downloadGpx(hike) {
 }
 
 function makeHtml() {
-  const embeddedHikes = hikes.map(hike => ({ ...hike, cs: csHikes[hike.id], image: imageDataUrl(hike.image), imageAsset: hike.image }));
+  const embeddedHikes = hikes.map(hike => ({
+    ...hike,
+    cs: csHikes[hike.id],
+    image: imageDataUrl(hike.image),
+    imageAsset: hike.image,
+    gallery: (hike.gallery || []).map(item => ({ src: imageDataUrl(item.asset), asset: item.asset, title: item.title }))
+  }));
   const appData = JSON.stringify({ accommodation: ACCOMMODATION, hikes: embeddedHikes, extras, extrasCs }, null, 2).replace(/</g, '\\u003c');
   return `<!doctype html>
 <html lang="en">
@@ -607,7 +799,8 @@ function makeHtml() {
 :root{--bg:#f7f7f2;--ink:#17201d;--muted:#64706b;--card:#ffffff;--line:rgba(23,32,29,.12);--brand:#0b7a75;--brand2:#2d6cdf;--warn:#b45309;--shadow:0 18px 50px rgba(12,30,25,.13);--radius:24px;--safe-top:env(safe-area-inset-top);--safe-bottom:env(safe-area-inset-bottom)}
 @media (prefers-color-scheme:dark){:root{--bg:#101412;--ink:#f2f5f1;--muted:#a8b3ad;--card:#1b211e;--line:rgba(242,245,241,.14);--brand:#37c3b6;--brand2:#8ab4ff;--warn:#f4b66f;--shadow:0 18px 50px rgba(0,0,0,.45)}}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}button,a{touch-action:manipulation}a{color:inherit}.app{min-height:100vh;padding-bottom:calc(86px + var(--safe-bottom))}.topbar{position:sticky;top:0;z-index:30;padding:calc(10px + var(--safe-top)) 16px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}.brand{min-width:0;flex:1}.brand strong{display:block;font-size:18px;letter-spacing:0}.brand span{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:10px 12px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.05)}.lang-toggle{display:flex;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;box-shadow:0 8px 24px rgba(0,0,0,.05)}.lang-toggle button{border:0;background:transparent;color:var(--muted);border-radius:999px;padding:8px 9px;font-weight:800;font-size:12px}.lang-toggle button.active{background:var(--brand);color:white}main{max-width:1100px;margin:0 auto}.hero{padding:18px 16px 6px}.hero h1{font-size:34px;line-height:1.02;margin:6px 0 10px;letter-spacing:0}.hero p{margin:0;color:var(--muted);font-size:16px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;min-width:0}.stat b{display:block;font-size:18px}.stat span{font-size:12px;color:var(--muted)}.cards{display:grid;gap:16px;padding:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.hike-card{cursor:pointer}.hike-card img{width:100%;height:210px;object-fit:cover;display:block;background:#dfe7e3}.card-body{padding:16px}.card h2,.card h3{margin:0 0 8px;letter-spacing:0}.card h2{font-size:23px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{font-size:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--card) 88%,var(--brand) 12%);padding:7px 9px;border-radius:999px;color:var(--ink);display:inline-flex;gap:6px;align-items:center}.weather{color:var(--muted);font-size:14px}.view{display:none}.view.active{display:block}.detail-hero{position:relative;min-height:420px;display:flex;align-items:flex-end;background:#26322f;overflow:hidden}.detail-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}.detail-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.74))}.detail-hero-content{position:relative;z-index:1;padding:70px 16px 22px;color:white;width:100%;max-width:1100px;margin:0 auto}.back{position:absolute;top:calc(14px + var(--safe-top));left:16px;z-index:3;background:rgba(255,255,255,.9);color:#17201d;border:0;border-radius:999px;padding:11px 13px;font-weight:700}.detail-hero h1{font-size:34px;line-height:1.02;margin:0 0 10px}.detail-hero p{margin:0;color:rgba(255,255,255,.86)}.section{padding:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);margin-bottom:16px}.grid{display:grid;grid-template-columns:1fr;gap:12px}.info{border-bottom:1px solid var(--line);padding:10px 0}.info:last-child{border-bottom:0}.info span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.info b{display:block;margin-top:3px}.map{height:390px;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#dbe4df}.actions{display:grid;grid-template-columns:1fr;gap:10px}.btn{border:0;border-radius:16px;padding:14px 15px;background:var(--brand);color:white;font-weight:750;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px}.btn.secondary{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn.blue{background:var(--brand2)}.list{display:grid;gap:10px;margin:10px 0 0}.list div{padding:11px 12px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--card) 92%,var(--brand) 8%)}.two{display:grid;gap:16px}.credit{font-size:11px;color:rgba(255,255,255,.72);margin-top:10px}.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:9px 12px calc(9px + var(--safe-bottom));background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tabbar button{border:0;border-radius:16px;background:transparent;color:var(--muted);padding:9px 6px;font-size:12px;font-weight:700}.tabbar button.active{background:var(--card);color:var(--brand);box-shadow:0 8px 24px rgba(0,0,0,.08)}.tabbar i{display:block;font-size:18px;margin-bottom:3px}.leaflet-popup-content{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.marker-dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;box-shadow:0 4px 12px rgba(0,0,0,.3);font-size:12px}.m-home{background:#0b7a75}.m-park{background:#334155}.m-start{background:#2d6cdf}.m-finish{background:#7c3aed}.m-hut{background:#b45309}.m-food{background:#dc2626}.m-water{background:#0284c7}.m-view{background:#16a34a}.m-swim{background:#0891b2}.m-toilet{background:#64748b}.m-photo{background:#db2777}
-@media (min-width:720px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.actions{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1fr 1fr}.hero h1,.detail-hero h1{font-size:48px}.detail-hero{min-height:520px}.map{height:500px}}
+.gallery{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 12px;margin:8px -2px 0;-webkit-overflow-scrolling:touch}.gallery figure{margin:0;min-width:78%;scroll-snap-align:start;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 26px rgba(0,0,0,.08)}.gallery img{width:100%;height:240px;display:block;object-fit:cover;background:#dfe7e3}.gallery figcaption{padding:9px 11px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (min-width:720px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.actions{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1fr 1fr}.hero h1,.detail-hero h1{font-size:48px}.detail-hero{min-height:520px}.map{height:500px}.gallery figure{min-width:42%}}
 </style>
 </head>
 <body>
@@ -638,7 +831,7 @@ const I18N = {
     extrasTitle:'Bohinj extras.', extrasIntro:'Food, beaches, ice cream, light and rainy-day fallbacks for the family.',
     back:'Hikes', download:'Download GPX', google:'Google Maps', mapy:'Mapy.com', apple:'Apple Maps',
     labels:['Difficulty','Distance','Elevation','Estimated hiking time','Estimated family time','Best time of day','Parking GPS','Parking fee','Drive time from accommodation','Walking time if possible'],
-    familyNotes:'Family notes', services:'Services and treats', views:'Views and photos', routeSource:'Route source',
+    photoGallery:'Photos from places on this hike', familyNotes:'Family notes', services:'Services and treats', views:'Views and photos', routeSource:'Route source',
     familyLabels:['Family friendliness','What children usually enjoy','Dangerous sections','Weather tips','What to pack','Alternative shorter route','Emergency information'],
     serviceLabels:['Toilets','Drinking water','Mountain huts','Restaurants','Swimming opportunities','Ice cream stop afterwards'],
     viewLabels:['Best viewpoints','Best photo spots','Hidden gems'],
@@ -656,7 +849,7 @@ const I18N = {
     extrasTitle:'Bohinj navíc.', extrasIntro:'Jídlo, pláže, zmrzlina, nejlepší světlo a náhradní plány do deště pro rodinu.',
     back:'Túry', download:'Stáhnout GPX', google:'Google Maps', mapy:'Mapy.com', apple:'Apple Maps',
     labels:['Obtížnost','Vzdálenost','Stoupání','Odhad času chůze','Odhad rodinného času','Nejlepší část dne','GPS parkování','Poplatek za parkování','Dojezd z ubytování','Pěší přístup, pokud dává smysl'],
-    familyNotes:'Poznámky pro rodinu', services:'Služby a odměny', views:'Vyhlídky a fotky', routeSource:'Zdroj trasy',
+    photoGallery:'Fotky z míst na této túře', familyNotes:'Poznámky pro rodinu', services:'Služby a odměny', views:'Vyhlídky a fotky', routeSource:'Zdroj trasy',
     familyLabels:['Vhodnost pro rodinu','Co děti obvykle baví','Nebezpečná místa','Tipy k počasí','Co sbalit','Kratší alternativa','Nouzové informace'],
     serviceLabels:['Toalety','Pitná voda','Horské chaty','Restaurace','Možnosti koupání','Zmrzlina po výletě'],
     viewLabels:['Nejlepší vyhlídky','Nejlepší místa na fotky','Skryté tipy'],
@@ -702,6 +895,7 @@ function card(raw){ const h=lh(raw); return \`<article class="card hike-card" da
 function renderHome(){ $('#cards').innerHTML = APP_DATA.hikes.map(card).join(''); $$('.hike-card').forEach(c=>c.addEventListener('click',()=>renderDetail(c.dataset.id))); }
 function info(label, value){ return \`<div class="info"><span>\${label}</span><b>\${value}</b></div>\`; }
 function list(items){ return \`<div class="list">\${items.map(x=>\`<div>\${x}</div>\`).join('')}</div>\`; }
+function galleryHtml(raw){ const items = raw.gallery || []; if(!items.length) return ''; return \`<div class="panel"><h3>\${t().photoGallery}</h3><div class="gallery">\${items.map((item,index)=>\`<figure><img src="\${item.src}" alt="\${item.title || raw.title}"><figcaption>\${item.title || ('Photo ' + (index + 1))}</figcaption></figure>\`).join('')}</div></div>\`; }
 function mapsUrl(kind,h){ const p=\`\${h.parking.lat},\${h.parking.lon}\`; if(kind==='google') return \`https://www.google.com/maps/dir/?api=1&destination=\${p}&travelmode=driving\`; if(kind==='apple') return \`https://maps.apple.com/?daddr=\${p}&dirflg=d\`; return \`https://mapy.com/turisticka?x=\${h.parking.lon}&y=\${h.parking.lat}&z=15\`; }
 
 function renderDetail(id, keepScroll=false){
@@ -712,6 +906,7 @@ function renderDetail(id, keepScroll=false){
  $('#detail').innerHTML = \`<button class="back" id="backBtn"><i class="fa-solid fa-chevron-left"></i> \${L.back}</button><div class="detail-hero"><img src="\${raw.image}" alt="\${h.title}"><div class="detail-hero-content"><h1>\${h.title}</h1><p>\${h.summary}</p><div class="meta"><span class="chip">\${h.difficulty}</span><span class="chip">\${h.distance}</span><span class="chip">\${elevationText(raw)}</span></div><div class="credit">\${h.imageCredit || ''}</div></div></div>
  <div class="section"><div class="panel"><div id="map-\${h.id}" class="map"></div></div>
  <div class="panel actions"><a class="btn" download href="\${raw.gpx}"><i class="fa-solid fa-download"></i>\${L.download}</a><a class="btn secondary" target="_blank" href="\${mapsUrl('google',raw)}"><i class="fa-brands fa-google"></i>\${L.google}</a><a class="btn secondary" target="_blank" href="\${mapsUrl('mapy',raw)}"><i class="fa-solid fa-map"></i>\${L.mapy}</a><a class="btn secondary" target="_blank" href="\${mapsUrl('apple',raw)}"><i class="fa-brands fa-apple"></i>\${L.apple}</a></div>
+ \${galleryHtml(raw)}
  <div class="panel grid">\${info(L.labels[0],h.difficulty)}\${info(L.labels[1],h.distance)}\${info(L.labels[2],elevationText(raw))}\${info(L.labels[3],h.hikingTime)}\${info(L.labels[4],h.familyTime)}\${info(L.labels[5],h.bestTime)}\${info(L.labels[6],\`\${raw.parking.name}: \${raw.parking.lat.toFixed(5)}, \${raw.parking.lon.toFixed(5)}\`)}\${info(L.labels[7],h.parkingFee || raw.parking.fee)}\${info(L.labels[8],h.drive)}\${info(L.labels[9],h.walk)}</div>
  <div class="two"><div class="panel"><h3>\${L.familyNotes}</h3>\${info(L.familyLabels[0],h.family)}\${info(L.familyLabels[1],h.kids)}\${info(L.familyLabels[2],h.danger)}\${info(L.familyLabels[3],h.weather)}\${info(L.familyLabels[4],h.pack)}\${info(L.familyLabels[5],h.shorter)}\${info(L.familyLabels[6],h.emergency)}</div>
  <div class="panel"><h3>\${L.services}</h3>\${info(L.serviceLabels[0],h.toilets)}\${info(L.serviceLabels[1],h.water)}\${info(L.serviceLabels[2],h.huts)}\${info(L.serviceLabels[3],h.restaurants)}\${info(L.serviceLabels[4],h.swimming)}\${info(L.serviceLabels[5],h.iceCream)}</div></div>
@@ -761,8 +956,9 @@ renderChrome(); renderHome(); renderExtras();
 }
 
 function makeServiceWorker() {
-  const assets = ['index.html','manifest.json',...hikes.map(h=>h.gpx),...hikes.map(h=>h.image),'icons/icon-192.svg','icons/icon-512.svg'];
-  return `const CACHE='bohinj-family-hikes-v3-czech-pericnik-photo';
+  const galleryAssets = hikes.flatMap(h => (h.gallery || []).map(item => item.asset));
+  const assets = ['index.html','manifest.json',...hikes.map(h=>h.gpx),...hikes.map(h=>h.image),...galleryAssets,'icons/icon-192.svg','icons/icon-512.svg'];
+  return `const CACHE='bohinj-family-hikes-v4-trip-galleries';
 const ASSETS=${JSON.stringify(assets)};
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
@@ -832,6 +1028,7 @@ On iPhone, tap Share -> Add to Home Screen. GitHub Pages is HTTPS, so the servic
   for (const hike of hikes) {
     await downloadGpx(hike);
     await downloadPhoto(hike);
+    await downloadGallery(hike);
   }
   fs.writeFileSync(path.join(outDir, 'index.html'), makeHtml());
   fs.writeFileSync(path.join(outDir, 'manifest.json'), makeManifest());
