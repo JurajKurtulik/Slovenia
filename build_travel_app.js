@@ -279,6 +279,14 @@ const hikes = [
 ];
 
 const extras = {
+  groceries: [
+    { name: 'Mercator Ribčev Laz', description: 'Closest full supermarket option near Lake Bohinj; good for daily basics.', lat: 46.2767415, lon: 13.8874917, hours: 'Mo-Sa 07:00-20:00' },
+    { name: 'Mercator Stara Fužina', description: 'Useful grocery stop on the way to Mostnica or the north/east side of the lake.', lat: 46.2876386, lon: 13.8938039, hours: 'Mo-Fr 07:00-19:00; Sa 07:00-15:00' },
+    { name: 'Trgovina Krpan Stara Fužina', description: 'Small convenience shop with long seasonal hours, useful for quick supplies.', lat: 46.2876416, lon: 13.8944629, hours: 'Mo-Sa 06:30-20:00; Su 06:30-11:00,15:00-19:00' },
+    { name: 'Spar Bohinjska Bistrica', description: 'Larger supermarket for a proper family stock-up before or after outings.', lat: 46.2733523, lon: 13.9540437, hours: 'Mo-Sa 07:00-20:00' },
+    { name: 'Mercator Bohinjska Bistrica', description: 'Large supermarket in Bohinjska Bistrica, convenient on the drive in/out of Bohinj.', lat: 46.2719872, lon: 13.9538364, hours: 'Mo-Sa 07:00-21:00' },
+    { name: 'Petrol Bohinjska Bistrica', description: 'Fuel station convenience shop for early/late essentials and road snacks.', lat: 46.2779484, lon: 13.9515589, hours: 'Mo-Sa 06:00-21:00; Su,PH 07:00-13:00,13:50-20:00' }
+  ],
   restaurants: [
     ['Foksner', 'Bohinjska Bistrica burgers and relaxed family meals.'],
     ['Gostilna Mihovc', 'Traditional Bohinj food in Stara Fužina/Srednja vas area.'],
@@ -474,6 +482,14 @@ const csHikes = {
 };
 
 const extrasCs = {
+  groceries: [
+    { name: 'Mercator Ribčev Laz', description: 'Nejbližší plnohodnotný supermarket u Bohinjského jezera; dobrý na denní nákupy.', lat: 46.2767415, lon: 13.8874917, hours: 'Po-So 07:00-20:00' },
+    { name: 'Mercator Stara Fužina', description: 'Praktická zastávka cestou na Mostnicu nebo na severovýchodní stranu jezera.', lat: 46.2876386, lon: 13.8938039, hours: 'Po-Pá 07:00-19:00; So 07:00-15:00' },
+    { name: 'Trgovina Krpan Stara Fužina', description: 'Menší obchod s delší sezónní otevírací dobou pro rychlé zásoby.', lat: 46.2876416, lon: 13.8944629, hours: 'Po-So 06:30-20:00; Ne 06:30-11:00,15:00-19:00' },
+    { name: 'Spar Bohinjska Bistrica', description: 'Větší supermarket na větší rodinný nákup před nebo po výletech.', lat: 46.2733523, lon: 13.9540437, hours: 'Po-So 07:00-20:00' },
+    { name: 'Mercator Bohinjska Bistrica', description: 'Velký supermarket v Bohinjské Bistrici, praktický při příjezdu nebo odjezdu.', lat: 46.2719872, lon: 13.9538364, hours: 'Po-So 07:00-21:00' },
+    { name: 'Petrol Bohinjska Bistrica', description: 'Čerpací stanice s obchodem na brzké/pozdní nezbytnosti a svačiny na cestu.', lat: 46.2779484, lon: 13.9515589, hours: 'Po-So 06:00-21:00; Ne,svátky 07:00-13:00,13:50-20:00' }
+  ],
   restaurants: [
     ['Foksner', 'Burgery a pohodové rodinné jídlo v Bohinjské Bistrici.'],
     ['Gostilna Mihovc', 'Tradiční bohinjská kuchyně v oblasti Stara Fužina / Srednja vas.'],
@@ -1010,7 +1026,7 @@ const I18N = {
     serviceLabels:['Toilets','Drinking water','Mountain huts','Restaurants','Swimming opportunities','Ice cream stop afterwards'],
     viewLabels:['Best viewpoints','Best photo spots','Hidden gems'],
     routeNote:'The GPX track for this hike was generated from BRouter using the hiking profile over OpenStreetMap ways, then embedded here and cached for offline use. Map tiles remain online-only.',
-    extraHeads:['Best restaurants around Bohinj','Best beaches','Best ice cream','Best light','Rainy day alternatives','Emergency numbers'],
+    extraHeads:['Closest grocery stores','Best restaurants around Bohinj','Best beaches','Best ice cream','Best light','Rainy day alternatives','Emergency numbers'],
     sunset:'Best sunset', sunrise:'Best sunrise',
     reviewNote:'Review buttons open live Google/TripAdvisor pages, so ratings stay current.',
     googleReviews:'Google reviews', tripadvisor:'TripAdvisor', googleNav:'Google Maps', appleNav:'Apple Maps',
@@ -1030,7 +1046,7 @@ const I18N = {
     serviceLabels:['Toalety','Pitná voda','Horské chaty','Restaurace','Možnosti koupání','Zmrzlina po výletě'],
     viewLabels:['Nejlepší vyhlídky','Nejlepší místa na fotky','Skryté tipy'],
     routeNote:'GPX trasa pro tuto túru byla vygenerována přes BRouter s pěším profilem nad cestami OpenStreetMap, poté vložena do aplikace a uložena pro offline použití. Mapové dlaždice zůstávají pouze online.',
-    extraHeads:['Nejlepší restaurace kolem Bohinje','Nejlepší pláže','Nejlepší zmrzlina','Nejlepší světlo','Alternativy do deště','Tísňová čísla'],
+    extraHeads:['Nejbližší obchody s potravinami','Nejlepší restaurace kolem Bohinje','Nejlepší pláže','Nejlepší zmrzlina','Nejlepší světlo','Alternativy do deště','Tísňová čísla'],
     sunset:'Nejlepší západ slunce', sunrise:'Nejlepší východ slunce',
     reviewNote:'Tlačítka recenzí otevírají živé stránky Google/TripAdvisor, takže hodnocení zůstávají aktuální.',
     googleReviews:'Recenze Google', tripadvisor:'TripAdvisor', googleNav:'Google Maps', appleNav:'Apple Maps',
@@ -1077,7 +1093,8 @@ function list(items){ return \`<div class="list">\${items.map(x=>\`<div>\${x}</d
 function galleryHtml(raw){ const items = raw.gallery || []; if(!items.length) return ''; return \`<div class="panel"><h3>\${t().photoGallery}</h3><div class="gallery">\${items.map((item,index)=>\`<figure><img src="\${item.src}" alt="\${item.title || raw.title}"><figcaption>\${item.title || ('Photo ' + (index + 1))}</figcaption></figure>\`).join('')}</div></div>\`; }
 function mapsUrl(kind,h){ const p=\`\${h.parking.lat},\${h.parking.lon}\`; if(kind==='google') return \`https://www.google.com/maps/dir/?api=1&destination=\${p}&travelmode=driving\`; if(kind==='apple') return \`https://maps.apple.com/?daddr=\${p}&dirflg=d\`; return \`https://mapy.com/turisticka?x=\${h.parking.lon}&y=\${h.parking.lat}&z=15\`; }
 function placeQuery(place){ const name = Array.isArray(place) ? place[0] : place.name; return encodeURIComponent(name + ' Bohinj Slovenia'); }
-function placeCard(place){ const L=t(); const name=Array.isArray(place)?place[0]:place.name; const desc=Array.isArray(place)?place[1]:place.description; const q=placeQuery(place); return \`<article class="place-card"><h4>\${name}</h4><p>\${desc}</p><div class="place-actions"><a class="primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=\${q}"><i class="fa-brands fa-google"></i> \${L.googleReviews}</a><a target="_blank" href="https://www.tripadvisor.com/Search?q=\${q}"><i class="fa-solid fa-star"></i> \${L.tripadvisor}</a><a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=\${q}&travelmode=driving"><i class="fa-solid fa-diamond-turn-right"></i> \${L.googleNav}</a><a target="_blank" href="https://maps.apple.com/?daddr=\${q}&dirflg=d"><i class="fa-brands fa-apple"></i> \${L.appleNav}</a></div></article>\`; }
+function placeDestination(place){ return !Array.isArray(place) && place.lat && place.lon ? encodeURIComponent(place.lat + ',' + place.lon) : placeQuery(place); }
+function placeCard(place){ const L=t(); const name=Array.isArray(place)?place[0]:place.name; const desc=Array.isArray(place)?place[1]:place.description; const q=placeQuery(place); const dest=placeDestination(place); const hours=(!Array.isArray(place) && place.hours) ? '<p><i class="fa-regular fa-clock"></i> '+place.hours+'</p>' : ''; return \`<article class="place-card"><h4>\${name}</h4><p>\${desc}</p>\${hours}<div class="place-actions"><a class="primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=\${q}"><i class="fa-brands fa-google"></i> \${L.googleReviews}</a><a target="_blank" href="https://www.tripadvisor.com/Search?q=\${q}"><i class="fa-solid fa-star"></i> \${L.tripadvisor}</a><a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=\${dest}&travelmode=driving"><i class="fa-solid fa-diamond-turn-right"></i> \${L.googleNav}</a><a target="_blank" href="https://maps.apple.com/?daddr=\${dest}&dirflg=d"><i class="fa-brands fa-apple"></i> \${L.appleNav}</a></div></article>\`; }
 function placeList(items){ return \`<div class="place-list">\${items.map(placeCard).join('')}</div>\`; }
 
 function fmtTime(date){ return date.toLocaleTimeString(state.lang === 'cs' ? 'cs-CZ' : 'en-GB', {hour:'2-digit', minute:'2-digit'}); }
@@ -1219,7 +1236,7 @@ function renderExtras(){
  const e = lx();
  const L = t();
  const rainyPlaces = e.rainy.map(item => Array.isArray(item) ? item : [item, item]);
- $('#extrasContent').innerHTML = \`<div class="panel"><p class="weather"><i class="fa-solid fa-star-half-stroke"></i> \${L.reviewNote}</p></div><div class="two"><div class="panel"><h3>\${L.extraHeads[0]}</h3>\${placeList(e.restaurants)}</div><div class="panel"><h3>\${L.extraHeads[1]}</h3>\${placeList(e.beaches)}</div><div class="panel"><h3>\${L.extraHeads[2]}</h3>\${placeList(e.icecream)}</div><div class="panel"><h3>\${L.extraHeads[3]}</h3>\${info(L.sunset,e.sunset)}\${info(L.sunrise,e.sunrise)}</div><div class="panel"><h3>\${L.extraHeads[4]}</h3>\${placeList(rainyPlaces)}</div><div class="panel"><h3>\${L.extraHeads[5]}</h3>\${list(e.emergency)}</div></div>\`;
+ $('#extrasContent').innerHTML = \`<div class="panel"><p class="weather"><i class="fa-solid fa-star-half-stroke"></i> \${L.reviewNote}</p></div><div class="panel"><h3>\${L.extraHeads[0]}</h3>\${placeList(e.groceries)}</div><div class="two"><div class="panel"><h3>\${L.extraHeads[1]}</h3>\${placeList(e.restaurants)}</div><div class="panel"><h3>\${L.extraHeads[2]}</h3>\${placeList(e.beaches)}</div><div class="panel"><h3>\${L.extraHeads[3]}</h3>\${placeList(e.icecream)}</div><div class="panel"><h3>\${L.extraHeads[4]}</h3>\${info(L.sunset,e.sunset)}\${info(L.sunrise,e.sunrise)}</div><div class="panel"><h3>\${L.extraHeads[5]}</h3>\${placeList(rainyPlaces)}</div><div class="panel"><h3>\${L.extraHeads[6]}</h3>\${list(e.emergency)}</div></div>\`;
 }
 
 document.addEventListener('click', async e => {
@@ -1242,7 +1259,7 @@ renderChrome(); state.recommendation=recommendHike(); renderDashboard(); renderH
 function makeServiceWorker() {
   const galleryAssets = hikes.flatMap(h => (h.gallery || []).map(item => item.asset));
   const assets = ['index.html','manifest.json',...hikes.map(h=>h.gpx),...hikes.map(h=>h.image),...galleryAssets,'icons/icon-192.svg','icons/icon-512.svg'];
-  return `const CACHE='bohinj-family-hikes-v6-extra-place-links';
+  return `const CACHE='bohinj-family-hikes-v7-grocery-navigation';
 const ASSETS=${JSON.stringify(assets)};
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
