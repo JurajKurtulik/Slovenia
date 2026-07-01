@@ -6,7 +6,6 @@ const imgDir = path.join(outDir, 'images');
 const iconDir = path.join(outDir, 'icons');
 fs.mkdirSync(imgDir, { recursive: true });
 fs.mkdirSync(iconDir, { recursive: true });
-for (const file of fs.readdirSync(imgDir)) fs.unlinkSync(path.join(imgDir, file));
 for (const file of fs.readdirSync(iconDir)) fs.unlinkSync(path.join(iconDir, file));
 
 const ACCOMMODATION = { name: 'Apartments Lake Bohinj', lat: 46.277735, lon: 13.836426, address: 'Ukanc 78, 4265 Bohinjsko Jezero' };
@@ -298,6 +297,200 @@ const extras = {
   emergency: ['112 emergency and mountain rescue', '113 police', 'Carry insurance details and children’s ID/passport copies', 'Tell someone your route before mountain-road hikes']
 };
 
+const csHikes = {
+  'savica-lakeshore': {
+    title: 'Vodopád Savica + břeh Bohinjského jezera',
+    difficulty: 'Lehká až střední',
+    hikingTime: '2 h 30 min',
+    familyTime: '3 h 30 min až 4 h 30 min',
+    bestTime: 'Ráno kvůli měkčímu světlu u Savice; pozdní odpoledne, pokud chcete hlavně břeh jezera.',
+    parkingFee: 'Placené sezónní parkoviště; ověřte aktuální hodinovou/denní sazbu na dopravních tabulích Bohinj.',
+    drive: '5-8 min k parkovišti Savica, nebo pěšky přímo z Ukance.',
+    walk: 'Možné přímo od apartmánu; přibližně 4,5 km k vyhlídce na vodopád, s návratem kolem Bohinjského jezera.',
+    weather: 'Nejlepší po suchém nebo jen mírně deštivém období; kamenné schody mohou po silném dešti klouzat.',
+    summary: 'Klasický rodinný den v západním Bohinji: lesní cesty, mohutná vyhlídka na vodopád Savica a pohodový návrat podél jezera.',
+    family: 'Dobré pro děti 5 a 7 let, pokud jdete po schodech pomalu a nespěcháte s návratem.',
+    kids: 'Hukot vodopádu, počítání kamenných schodů, kamínky u jezera a lodě v Ukanci.',
+    danger: 'Strmé zabezpečené schody u vodopádu, mokrý kámen, v létě rušná cesta; děti držte uvnitř zábradlí.',
+    toilets: 'U parkoviště Savica a sezónně v okolí Ukance.',
+    water: 'Vezměte vlastní vodu; sezónní občerstvení u Koči pri Savici a v Ukanci.',
+    huts: 'Koča pri Savici u parkoviště pod vodopádem.',
+    restaurants: 'Možnosti u jezera v Ukanci a u Hotelu Zlatorog; více podniků je v Ribčev Lazu.',
+    swimming: 'Bohinjské jezero u Ukance/delty Savice za teplého stabilního počasí; voda se rychle prohlubuje.',
+    iceCream: 'Sezónní stánek v Ukanci nebo zmrzlina na nábřeží v Ribčev Lazu.',
+    viewpoints: ['Vyhlídka na vodopád Savica', 'Pohledy na jezero ze západního břehu u Ukance', 'Delta Savice směrem na východ přes jezero'],
+    photo: ['Plošina u vodopádu', 'Lesní schodiště', 'Břeh Bohinjského jezera u Ukance'],
+    hidden: 'Tiché pěšiny v deltě Savice na západním konci jezera jsou klidnější než hlavní pláže.',
+    pack: 'Boty s dobrou podrážkou, lehká pláštěnka, voda, svačina, v létě věci na koupání a malý ručník.',
+    shorter: 'Dojeďte na parkoviště Savica a dejte jen vodopád tam a zpět, asi 1,5 km a 150 m stoupání.',
+    emergency: 'Volejte 112. Uveďte nejbližší orientační bod: Slap Savica / Ukanc.'
+  },
+  'vogel-panorama': {
+    title: 'Panorama Vogel lanovkou',
+    difficulty: 'Lehká až střední alpská procházka',
+    hikingTime: '1 h 45 min',
+    familyTime: '2 h 30 min až 4 h včetně lanovky, fotek a zastávek',
+    bestTime: 'První ranní lanovky za jasného počasí; vyhněte se bouřkám a silnému větru.',
+    parkingFee: 'V hlavní sezóně placené/regulované parkování; je potřeba koupit lístky na lanovku.',
+    drive: '2-4 min k dolní stanici lanovky, případně pěšky z Ukance.',
+    walk: 'Ano. Dolní stanice je asi 10-15 min pěšky od ubytování.',
+    weather: 'Má smysl, když je základna oblačnosti nad areálem; při tvorbě bouřek se vraťte.',
+    summary: 'Krátký alpský výlet s velkou odměnou: lanovkou na Vogel, výhledy na Bohinjské jezero a Julské Alpy.',
+    family: 'Výborné, pokud dětem nevadí lanovka a držíte se značených cest u areálu.',
+    kids: 'Jízda lanovkou, velké horské výhledy, sedačkové lanovky, alpské květiny a v sezóně krávy.',
+    danger: 'Alpské slunce, náhlé bouřky, nezajištěné okraje mimo hlavní zóny, servisní cesty; u hran držte děti za ruku.',
+    toilets: 'U dolní i horní stanice lanovky a v horských restauracích v provozní době.',
+    water: 'Doplňte/kupte u lanovky; na exponovanou procházku vezměte dostatek vody.',
+    huts: 'Viharnik a restaurace v areálu Vogel u horní stanice; Merjasec v sezóně.',
+    restaurants: 'Restaurace u horní stanice Vogelu; po návratu Ukanc nebo Ribčev Laz.',
+    swimming: 'Po výletu koupání v Bohinjském jezeře u Ukance.',
+    iceCream: 'Stánek v Ukanci nebo nábřeží v Ribčev Lazu.',
+    viewpoints: ['Vyhlídková terasa horní stanice Vogel', 'Oblast Orlove glave', 'Za jasna výhledy směrem k Triglavu'],
+    photo: ['Terasa lanovky nad jezerem', 'Cesty přes alpské pastviny', 'Panorama Julských Alp'],
+    hidden: 'Popojděte kousek za nejrušnější terasu pro klidnější záběry pastvin a jezera.',
+    pack: 'Větrovka, kšiltovky, opalovací krém, svačina, voda, lehká mikina i v létě.',
+    shorter: 'Vyjeďte nahoru, užijte si vyhlídku u stanice a vraťte se bez prodloužení k Orlove glave.',
+    emergency: 'Volejte 112. Uveďte Vogel / horní stanici lanovky nebo nejbližší název vleku.'
+  },
+  'mostnica-voje': {
+    title: 'Soutěska Mostnica + údolí Voje',
+    difficulty: 'Střední rodinná túra',
+    hikingTime: '3 h',
+    familyTime: '4 h až 5 h 30 min',
+    bestTime: 'Ráno před ruchem v soutěsce; v teplém odpoledni je krásný piknik ve Voje.',
+    parkingFee: 'Placená parkovací zóna Bohinj; soutěska Mostnica může mít v sezóně také vstupné.',
+    drive: '15-20 min z Ukance podle provozu kolem jezera.',
+    walk: 'Z Ukance s dětmi nedává smysl; použijte auto nebo letní shuttle, pokud jezdí.',
+    weather: 'Dobré za tepla díky stínu v soutěsce; nechoďte při náledí nebo po intenzivních bouřkách.',
+    summary: 'Stinná soutěska se smaragdovými tůněmi, přírodními skalními tvary, loukami ve Voje a prodloužením k vodopádu.',
+    family: 'Velmi dobré pro zvídavé děti, ale hlídejte délku a držte je dál od hran soutěsky.',
+    kids: 'Sloní skála, mostky, průzračné tůně, louka na piknik a vodopád na konci.',
+    danger: 'Srázy do soutěsky, mokré kořeny a kameny, úzká místa; děti mějte nablízku.',
+    toilets: 'V sezóně u parkoviště/vstupu a v Koči na Vojah, když je otevřená.',
+    water: 'Vezměte vodu; sezónní občerstvení v Koči na Vojah.',
+    huts: 'Koča na Vojah v údolí Voje.',
+    restaurants: 'Koča na Vojah; po túře Stara Fužina a Ribčev Laz.',
+    swimming: 'V soutěsce se nekoupejte. Lepší jsou pláže u Bohinjského jezera.',
+    iceCream: 'Nábřeží v Ribčev Lazu nebo sezónní kavárny ve Staré Fužině.',
+    viewpoints: ['Mosty přes soutěsku Mostnica', 'Louky údolí Voje', 'Oblast vodopádu Voje'],
+    photo: ['Sloní skála v Mostnici', 'Kamenné mostky přes soutěsku', 'Louka Voje s horským pozadím'],
+    hidden: 'Klidnější okraje luk za Kočou na Vojah jsou ideální na svačinu před návratem.',
+    pack: 'Uzavřené boty, lehká vrstva do stínu, voda, piknik, malá lékárnička.',
+    shorter: 'Jděte jen okruh soutěskou k hlavním mostům a sloní skále, pak zpět, asi 3-5 km.',
+    emergency: 'Volejte 112. Uveďte Mostnica, údolí Voje nebo Koča na Vojah podle polohy.'
+  },
+  'planina-blato-jezeru': {
+    title: 'Planina Blato → Planina pri Jezeru',
+    difficulty: 'Střední horská lesní túra',
+    hikingTime: '2 h 15 min',
+    familyTime: '3 h 30 min až 5 h',
+    bestTime: 'Ráno, hlavně v létě, kdy se parkoviště plní a odpoledne hrozí bouřky.',
+    parkingFee: 'Placený režim horské silnice/parkování; ověřte aktuální denní sazbu a omezení na dopravních tabulích Bohinj.',
+    drive: '35-45 min z Ukance přes Starou Fužinu po horské silnici.',
+    walk: 'Pěší přístup z Ukance s dětmi není rozumný.',
+    weather: 'Lesní stín pomáhá v teple; vynechte při bouřkách, cesta i horní trail jsou odlehlé.',
+    summary: 'Kompaktní horský výlet od Planiny Blato lesem k jezírku a chatě na Planině pri Jezeru.',
+    family: 'Dobré pro aktivní děti zvyklé na nerovný terén; stálé stoupání, ale jasná odměna u jezírka.',
+    kids: 'Krávy, kořeny v lese, malé jezírko, dobroty na chatě a pozorování života u vody.',
+    danger: 'Kamenitá/kořenová cesta, bláto po dešti, horská příjezdová silnice, studená voda; držte se značení.',
+    toilets: 'Na chatě Koča na Planini pri Jezeru, když je otevřená; u parkoviště omezeně.',
+    water: 'Vezměte vodu; občerstvení na chatě podle provozu.',
+    huts: 'Koča na Planini pri Jezeru.',
+    restaurants: 'Koča na Planini pri Jezeru; cestou zpět Stara Fužina nebo Ribčev Laz.',
+    swimming: 'Koupání v malém alpském jezírku se nedoporučuje; později raději Bohinjské jezero.',
+    iceCream: 'Nábřeží v Ribčev Lazu po návratu z horské silnice.',
+    viewpoints: ['Břeh jezírka Planina pri Jezeru', 'Otevřené pastviny u Planiny Blato', 'Lesní průhledy na bohinjské hory'],
+    photo: ['Jezírko a chata na Planině pri Jezeru', 'Děti na lesní cestě', 'Detaily pastvin na Planině Blato'],
+    hidden: 'Krátká procházka kolem jezírka dá klidnější záběry než první místo u chaty.',
+    pack: 'Turistické boty, vrstvy, pláštěnka, karta/hotovost na chatu, voda, svačina, repelent.',
+    shorter: 'Otočte se u první otevřené pastviny nebo výhledu, pokud dětem dochází síly.',
+    emergency: 'Volejte 112. Uveďte silnici Planina Blato nebo Koča na Planini pri Jezeru.'
+  },
+  'planina-zajamniki': {
+    title: 'Planina Zajamniki',
+    difficulty: 'Střední procházka přes louky a les',
+    hikingTime: '2 h 45 min',
+    familyTime: '4 h až 5 h',
+    bestTime: 'Ráno nebo zlatá hodina odpoledne pro slavný výhled na řadu salaší.',
+    parkingFee: 'Regulace parkování na horských cestách se sezónně mění; používejte jen značená legální parkovací místa.',
+    drive: '45-60 min z Ukance přes Bohinjskou Bistricu/Pokljuku/Uskovnici podle provozu a pravidel vjezdu.',
+    walk: 'Ne; jde o výlet s dojezdem autem na Pokljuku/Uskovnici.',
+    weather: 'Nejlepší za stabilního počasí. Les může být chladný, pastvina je vystavená slunci i bouřkám.',
+    summary: 'Scénická pokljucká procházka k jedné z nejfotogeničtějších alpských pastvin Slovinska s dlouhou řadou dřevěných salaší.',
+    family: 'Dobré pro děti, které zvládnou delší zvlněnou lesní cestu; služby jsou omezené, vezměte svačinu.',
+    kids: 'Dřevěné salaše, výhledy z pastvin, lesní cesty, motýli a prostor na odpočinek.',
+    danger: 'Rozcestí, lesní cesty, občas kola/auta, ohradníky; respektujte soukromé salaše.',
+    toilets: 'Omezené nebo žádné u trailheadu a na pastvině; využijte toalety před výjezdem.',
+    water: 'Vezměte všechnu vodu; nespoléhejte na zdroje na pastvině.',
+    huts: 'Na trase není garantovaná obsluhovaná chata; okolní podniky na Pokljuce mohou fungovat sezónně.',
+    restaurants: 'Uskovnica/Pokljuka podle sezóny; lepší jídlo zpět v Bohinji.',
+    swimming: 'Na trase není koupání; později podle času Bohinjské jezero.',
+    iceCream: 'Bohinjska Bistrica nebo Ribčev Laz při návratu.',
+    viewpoints: ['Klasická vyhlídka na řadu salaší Zajamniki', 'Lesní průhledy na Pokljuce', 'Okraje pastvin směrem k Julským Alpám'],
+    photo: ['Konec řady salaší s pohledem zpět', 'Nízký záběr podél dřevěných salaší', 'Pastvina s horským horizontem'],
+    hidden: 'Dojděte potichu na vzdálenější konec osady pro čistší kompozici bez tlačení u salaší.',
+    pack: 'Voda, piknik, kšiltovky, lehká bunda, offline mapa, respekt k soukromému majetku.',
+    shorter: 'Otočte se u vstupu na pastvinu a nechoďte celou řadu salaší.',
+    emergency: 'Volejte 112. Uveďte Pokljuka / Uskovnica / Planina Zajamniki.'
+  },
+  'pericnik-waterfall': {
+    title: 'Vodopád Peričnik',
+    difficulty: 'Lehká, ale strmá a mokrá u vodopádů',
+    hikingTime: '45 min až 1 h 15 min',
+    familyTime: '1 h 30 min až 2 h 30 min',
+    bestTime: 'Ráno před davy nebo teplé odpoledne, kdy je vodní tříšť příjemná.',
+    parkingFee: 'V sezóně obvykle placené/regulované; přístupová cesta se může po bouřkách nebo v zimě měnit.',
+    drive: '1 h 15 min až 1 h 35 min z Ukance přes Bled/Mojstranu podle provozu.',
+    walk: 'Ne z Bohinje; pěšky jen od parkoviště u vodopádu.',
+    weather: 'Vyhněte se mrazu a silnému dešti; cesta klouže kvůli tříšti i za slunce.',
+    summary: 'Dramatická krátká procházka k ikonickému slovinskému vodopádu, včetně zážitkové cesty za spodním vodopádem, pokud jsou podmínky bezpečné.',
+    family: 'Skvělý krátký výlet, ale dospělí musí velmi hlídat mokré a exponované úseky za vodopádem.',
+    kids: 'Stát ve vodní tříšti, vidět vodopád zezadu, lesní mostek a mohutný hukot vody.',
+    danger: 'Velmi kluzká skála, nízký strop, exponovaný průchod za vodopádem, v chladu padající led/kameny; při nejistotě vynechte horní a zadní úsek.',
+    toilets: 'U Koči pri Peričniku, když je otevřená; jinak omezeně.',
+    water: 'Vezměte vodu; sezónní občerstvení u chaty poblíž.',
+    huts: 'Koča pri Peričniku u parkoviště.',
+    restaurants: 'Koča pri Peričniku; po návštěvě restaurace v Mojstraně.',
+    swimming: 'U vodopádu se nekoupejte; voda je studená a rychlá, hrozí pád kamenů.',
+    iceCream: 'Mojstrana nebo Bled cestou zpět.',
+    viewpoints: ['Čelní vyhlídka na spodní Peričnik', 'Cesta za vodopádem', 'Přístup k hornímu vodopádu, pokud je bezpečno'],
+    photo: ['Za spodním vodopádem', 'Mostek a potok při příchodu', 'Široký vertikální záběr od paty vodopádu'],
+    hidden: 'Horní vodopád bývá klidnější, ale jděte jen tehdy, když jsou děti jisté a cesta suchá.',
+    pack: 'Nepromokavá bunda, boty s dobrou podrážkou, suchá vrstva pro děti, hadřík na objektiv, malý ručník.',
+    shorter: 'Navštivte jen vyhlídku na spodní vodopád od parkoviště a vynechte horní/zadní trasu.',
+    emergency: 'Volejte 112. Uveďte Slap Peričnik / údolí Vrata u Mojstrany.'
+  }
+};
+
+const extrasCs = {
+  restaurants: [
+    ['Foksner', 'Burgery a pohodové rodinné jídlo v Bohinjské Bistrici.'],
+    ['Gostilna Mihovc', 'Tradiční bohinjská kuchyně v oblasti Stara Fužina / Srednja vas.'],
+    ['Restaurant Triglav Bohinj', 'Jídlo u jezera s místními pokrmy.'],
+    ['Koča pri Savici', 'Jednoduchá zastávka po vodopádu.'],
+    ['Koča na Vojah', 'Nejlepší spojit s Mostnicí a údolím Voje.']
+  ],
+  beaches: [
+    ['Ukanc, západní konec', 'Nejblíž apartmánu, krásné horské pozadí, pozor na rychlé prohloubení.'],
+    ['Ribčev Laz', 'Služby, lodě, zmrzlina a toalety blízko sebe.'],
+    ['Zátoka u Fužiny / severovýchod jezera', 'Dobré spojení s procházkou ve Staré Fužině.']
+  ],
+  icecream: [
+    ['Stánky v Ribčev Lazu', 'Nejspolehlivější rodinná zmrzlinová zastávka.'],
+    ['Sezónní stánek v Ukanci', 'Nejlepší po koupání u apartmánu.'],
+    ['Kavárny v Bohinjské Bistrici', 'Dobré při návratu z Pokljuky nebo Peričniku.']
+  ],
+  sunset: 'Ukanc a delta Savice pro zlaté světlo přes Bohinjské jezero.',
+  sunrise: 'Most a kostel v Ribčev Lazu pro první světlo na jezeře, nebo klidnější Ukanc.',
+  rainy: [
+    'Aquapark Bohinj v Bohinjské Bistrici.',
+    'Krátké kavárny u jezera a okolí kostela sv. Jana Křtitele během pauzy v dešti.',
+    'Bledský hrad nebo staré město Radovljica pro delší městský/indoor den.',
+    'Planica Nordic Centre / Slovinské alpské muzeum v Mojstraně, pokud se spojí s oknem počasí u Peričniku.'
+  ],
+  emergency: ['112 tísňová linka a horská služba', '113 policie', 'Mějte údaje o pojištění a kopie dokladů dětí', 'Před horskými túrami někomu řekněte trasu']
+};
+
 function xmlEscape(s) {
   return String(s).replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&apos;','"':'&quot;'}[c]));
 }
@@ -307,7 +500,45 @@ function makeIcon(size) {
   fs.writeFileSync(path.join(iconDir, `icon-${size}.svg`), svg);
 }
 
+function imageDataUrl(assetPath) {
+  const full = path.join(outDir, assetPath);
+  const ext = path.extname(assetPath).toLowerCase();
+  const mime = ext === '.svg' ? 'image/svg+xml' : ext === '.png' ? 'image/png' : ext === '.webp' ? 'image/webp' : 'image/jpeg';
+  return `data:${mime};base64,${fs.readFileSync(full).toString('base64')}`;
+}
+
 async function downloadPhoto(hike) {
+  const existing = ['jpg', 'jpeg', 'png', 'webp', 'svg']
+    .map(ext => ({ ext, file: path.join(imgDir, `${hike.id}.${ext}`) }))
+    .find(candidate => fs.existsSync(candidate.file) && fs.statSync(candidate.file).size > 1000);
+  if (existing) {
+    const ext = existing.ext === 'jpeg' ? 'jpg' : existing.ext;
+    hike.image = `images/${hike.id}.${ext}`;
+    hike.imageCredit = hike.imageCredit || 'Local cached image';
+    return;
+  }
+  const forcedImages = {
+    'pericnik-waterfall': {
+      url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/BurgerPericnikPoleti.jpg?width=900',
+      credit: 'Wikimedia Commons: BurgerPericnikPoleti.jpg'
+    }
+  };
+  if (forcedImages[hike.id]) {
+    try {
+      const forced = forcedImages[hike.id];
+      const imageRes = await fetch(forced.url, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } });
+      const type = imageRes.headers.get('content-type') || '';
+      if (!imageRes.ok || !type.startsWith('image/')) throw new Error(`bad forced image response ${imageRes.status} ${type}`);
+      const ext = type.includes('png') ? 'png' : type.includes('webp') ? 'webp' : 'jpg';
+      const safe = `${hike.id}.${ext}`;
+      fs.writeFileSync(path.join(imgDir, safe), Buffer.from(await imageRes.arrayBuffer()));
+      hike.image = `images/${safe}`;
+      hike.imageCredit = forced.credit;
+      return;
+    } catch (e) {
+      console.warn(`Forced image failed for ${hike.id}: ${e.message}`);
+    }
+  }
   const api = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(hike.imageQuery + ' filetype:bitmap')}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=1200&format=json&origin=*`;
   try {
     const data = await (await fetch(api, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } })).json();
@@ -357,7 +588,8 @@ async function downloadGpx(hike) {
 }
 
 function makeHtml() {
-  const appData = JSON.stringify({ accommodation: ACCOMMODATION, hikes, extras }, null, 2).replace(/</g, '\\u003c');
+  const embeddedHikes = hikes.map(hike => ({ ...hike, cs: csHikes[hike.id], image: imageDataUrl(hike.image), imageAsset: hike.image }));
+  const appData = JSON.stringify({ accommodation: ACCOMMODATION, hikes: embeddedHikes, extras, extrasCs }, null, 2).replace(/</g, '\\u003c');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -374,29 +606,67 @@ function makeHtml() {
 <style>
 :root{--bg:#f7f7f2;--ink:#17201d;--muted:#64706b;--card:#ffffff;--line:rgba(23,32,29,.12);--brand:#0b7a75;--brand2:#2d6cdf;--warn:#b45309;--shadow:0 18px 50px rgba(12,30,25,.13);--radius:24px;--safe-top:env(safe-area-inset-top);--safe-bottom:env(safe-area-inset-bottom)}
 @media (prefers-color-scheme:dark){:root{--bg:#101412;--ink:#f2f5f1;--muted:#a8b3ad;--card:#1b211e;--line:rgba(242,245,241,.14);--brand:#37c3b6;--brand2:#8ab4ff;--warn:#f4b66f;--shadow:0 18px 50px rgba(0,0,0,.45)}}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}button,a{touch-action:manipulation}a{color:inherit}.app{min-height:100vh;padding-bottom:calc(86px + var(--safe-bottom))}.topbar{position:sticky;top:0;z-index:30;padding:calc(10px + var(--safe-top)) 16px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}.brand{min-width:0;flex:1}.brand strong{display:block;font-size:18px;letter-spacing:0}.brand span{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:10px 12px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.05)}main{max-width:1100px;margin:0 auto}.hero{padding:18px 16px 6px}.hero h1{font-size:34px;line-height:1.02;margin:6px 0 10px;letter-spacing:0}.hero p{margin:0;color:var(--muted);font-size:16px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;min-width:0}.stat b{display:block;font-size:18px}.stat span{font-size:12px;color:var(--muted)}.cards{display:grid;gap:16px;padding:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.hike-card{cursor:pointer}.hike-card img{width:100%;height:210px;object-fit:cover;display:block;background:#dfe7e3}.card-body{padding:16px}.card h2,.card h3{margin:0 0 8px;letter-spacing:0}.card h2{font-size:23px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{font-size:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--card) 88%,var(--brand) 12%);padding:7px 9px;border-radius:999px;color:var(--ink);display:inline-flex;gap:6px;align-items:center}.weather{color:var(--muted);font-size:14px}.view{display:none}.view.active{display:block}.detail-hero{position:relative;min-height:420px;display:flex;align-items:flex-end;background:#26322f;overflow:hidden}.detail-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}.detail-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.74))}.detail-hero-content{position:relative;z-index:1;padding:70px 16px 22px;color:white;width:100%;max-width:1100px;margin:0 auto}.back{position:absolute;top:calc(14px + var(--safe-top));left:16px;z-index:3;background:rgba(255,255,255,.9);color:#17201d;border:0;border-radius:999px;padding:11px 13px;font-weight:700}.detail-hero h1{font-size:34px;line-height:1.02;margin:0 0 10px}.detail-hero p{margin:0;color:rgba(255,255,255,.86)}.section{padding:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);margin-bottom:16px}.grid{display:grid;grid-template-columns:1fr;gap:12px}.info{border-bottom:1px solid var(--line);padding:10px 0}.info:last-child{border-bottom:0}.info span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.info b{display:block;margin-top:3px}.map{height:390px;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#dbe4df}.actions{display:grid;grid-template-columns:1fr;gap:10px}.btn{border:0;border-radius:16px;padding:14px 15px;background:var(--brand);color:white;font-weight:750;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px}.btn.secondary{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn.blue{background:var(--brand2)}.list{display:grid;gap:10px;margin:10px 0 0}.list div{padding:11px 12px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--card) 92%,var(--brand) 8%)}.two{display:grid;gap:16px}.credit{font-size:11px;color:rgba(255,255,255,.72);margin-top:10px}.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:9px 12px calc(9px + var(--safe-bottom));background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tabbar button{border:0;border-radius:16px;background:transparent;color:var(--muted);padding:9px 6px;font-size:12px;font-weight:700}.tabbar button.active{background:var(--card);color:var(--brand);box-shadow:0 8px 24px rgba(0,0,0,.08)}.tabbar i{display:block;font-size:18px;margin-bottom:3px}.leaflet-popup-content{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.marker-dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;box-shadow:0 4px 12px rgba(0,0,0,.3);font-size:12px}.m-home{background:#0b7a75}.m-park{background:#334155}.m-start{background:#2d6cdf}.m-finish{background:#7c3aed}.m-hut{background:#b45309}.m-food{background:#dc2626}.m-water{background:#0284c7}.m-view{background:#16a34a}.m-swim{background:#0891b2}.m-toilet{background:#64748b}.m-photo{background:#db2777}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}button,a{touch-action:manipulation}a{color:inherit}.app{min-height:100vh;padding-bottom:calc(86px + var(--safe-bottom))}.topbar{position:sticky;top:0;z-index:30;padding:calc(10px + var(--safe-top)) 16px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}.brand{min-width:0;flex:1}.brand strong{display:block;font-size:18px;letter-spacing:0}.brand span{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:10px 12px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.05)}.lang-toggle{display:flex;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;box-shadow:0 8px 24px rgba(0,0,0,.05)}.lang-toggle button{border:0;background:transparent;color:var(--muted);border-radius:999px;padding:8px 9px;font-weight:800;font-size:12px}.lang-toggle button.active{background:var(--brand);color:white}main{max-width:1100px;margin:0 auto}.hero{padding:18px 16px 6px}.hero h1{font-size:34px;line-height:1.02;margin:6px 0 10px;letter-spacing:0}.hero p{margin:0;color:var(--muted);font-size:16px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;min-width:0}.stat b{display:block;font-size:18px}.stat span{font-size:12px;color:var(--muted)}.cards{display:grid;gap:16px;padding:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.hike-card{cursor:pointer}.hike-card img{width:100%;height:210px;object-fit:cover;display:block;background:#dfe7e3}.card-body{padding:16px}.card h2,.card h3{margin:0 0 8px;letter-spacing:0}.card h2{font-size:23px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{font-size:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--card) 88%,var(--brand) 12%);padding:7px 9px;border-radius:999px;color:var(--ink);display:inline-flex;gap:6px;align-items:center}.weather{color:var(--muted);font-size:14px}.view{display:none}.view.active{display:block}.detail-hero{position:relative;min-height:420px;display:flex;align-items:flex-end;background:#26322f;overflow:hidden}.detail-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}.detail-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.74))}.detail-hero-content{position:relative;z-index:1;padding:70px 16px 22px;color:white;width:100%;max-width:1100px;margin:0 auto}.back{position:absolute;top:calc(14px + var(--safe-top));left:16px;z-index:3;background:rgba(255,255,255,.9);color:#17201d;border:0;border-radius:999px;padding:11px 13px;font-weight:700}.detail-hero h1{font-size:34px;line-height:1.02;margin:0 0 10px}.detail-hero p{margin:0;color:rgba(255,255,255,.86)}.section{padding:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);margin-bottom:16px}.grid{display:grid;grid-template-columns:1fr;gap:12px}.info{border-bottom:1px solid var(--line);padding:10px 0}.info:last-child{border-bottom:0}.info span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.info b{display:block;margin-top:3px}.map{height:390px;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#dbe4df}.actions{display:grid;grid-template-columns:1fr;gap:10px}.btn{border:0;border-radius:16px;padding:14px 15px;background:var(--brand);color:white;font-weight:750;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px}.btn.secondary{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn.blue{background:var(--brand2)}.list{display:grid;gap:10px;margin:10px 0 0}.list div{padding:11px 12px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--card) 92%,var(--brand) 8%)}.two{display:grid;gap:16px}.credit{font-size:11px;color:rgba(255,255,255,.72);margin-top:10px}.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:9px 12px calc(9px + var(--safe-bottom));background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tabbar button{border:0;border-radius:16px;background:transparent;color:var(--muted);padding:9px 6px;font-size:12px;font-weight:700}.tabbar button.active{background:var(--card);color:var(--brand);box-shadow:0 8px 24px rgba(0,0,0,.08)}.tabbar i{display:block;font-size:18px;margin-bottom:3px}.leaflet-popup-content{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.marker-dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;box-shadow:0 4px 12px rgba(0,0,0,.3);font-size:12px}.m-home{background:#0b7a75}.m-park{background:#334155}.m-start{background:#2d6cdf}.m-finish{background:#7c3aed}.m-hut{background:#b45309}.m-food{background:#dc2626}.m-water{background:#0284c7}.m-view{background:#16a34a}.m-swim{background:#0891b2}.m-toilet{background:#64748b}.m-photo{background:#db2777}
 @media (min-width:720px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.actions{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1fr 1fr}.hero h1,.detail-hero h1{font-size:48px}.detail-hero{min-height:520px}.map{height:500px}}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="topbar"><div class="brand"><strong>Bohinj Family Hikes</strong><span>Ukanc base: Apartments Lake Bohinj</span></div><a class="pill" href="#extras" data-tab="extras"><i class="fa-solid fa-circle-info"></i> Extras</a></header>
+<header class="topbar"><div class="brand"><strong id="brandTitle">Bohinj Family Hikes</strong><span id="brandSub">Ukanc base: Apartments Lake Bohinj</span></div><div class="lang-toggle" aria-label="Language"><button data-lang="en" class="active">EN</button><button data-lang="cs">CZ</button></div><a class="pill" href="#extras" data-tab="extras"><i class="fa-solid fa-circle-info"></i> <span id="extrasTop">Extras</span></a></header>
 <main>
 <section id="home" class="view active">
-<div class="hero"><h1>Six verified family hikes from Bohinj.</h1><p>Mobile-first guide for two adults with children aged 5 and 7. Tracks use BRouter hiking over OpenStreetMap and stay within the 12 km/day target.</p><div class="stats"><div class="stat"><b>6</b><span>hikes</span></div><div class="stat"><b>12 km</b><span>max/day</span></div><div class="stat"><b>112</b><span>emergency</span></div></div></div>
+<div class="hero"><h1 id="homeTitle">Six verified family hikes from Bohinj.</h1><p id="homeIntro">Mobile-first guide for two adults with children aged 5 and 7. Tracks use BRouter hiking over OpenStreetMap and stay within the 12 km/day target.</p><div class="stats"><div class="stat"><b>6</b><span id="statHikes">hikes</span></div><div class="stat"><b>12 km</b><span id="statMax">max/day</span></div><div class="stat"><b>112</b><span id="statEmergency">emergency</span></div></div></div>
 <div class="cards" id="cards"></div>
 </section>
 <section id="detail" class="view"></section>
-<section id="extras" class="view"><div class="hero"><h1>Bohinj extras.</h1><p>Food, beaches, ice cream, light and rainy-day fallbacks for the family.</p></div><div class="section" id="extrasContent"></div></section>
+<section id="extras" class="view"><div class="hero"><h1 id="extrasTitle">Bohinj extras.</h1><p id="extrasIntro">Food, beaches, ice cream, light and rainy-day fallbacks for the family.</p></div><div class="section" id="extrasContent"></div></section>
 </main>
 </div>
-<nav class="tabbar"><button class="active" data-tab="home"><i class="fa-solid fa-mountain-sun"></i>Hikes</button><button data-tab="extras"><i class="fa-solid fa-umbrella-beach"></i>Extras</button><button data-action="install"><i class="fa-solid fa-mobile-screen"></i>Install</button></nav>
+<nav class="tabbar"><button class="active" data-tab="home"><i class="fa-solid fa-mountain-sun"></i><span id="tabHikes">Hikes</span></button><button data-tab="extras"><i class="fa-solid fa-umbrella-beach"></i><span id="tabExtras">Extras</span></button><button data-action="install"><i class="fa-solid fa-mobile-screen"></i><span id="tabInstall">Install</span></button></nav>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
 const APP_DATA = ${appData};
-const state = { maps: {}, deferredInstall: null };
+const state = { maps: {}, deferredInstall: null, lang: localStorage.getItem('bohinj-lang') || 'en', currentDetail: null };
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+const I18N = {
+  en: {
+    brandTitle:'Bohinj Family Hikes', brandSub:'Ukanc base: Apartments Lake Bohinj', extras:'Extras',
+    homeTitle:'Six verified family hikes from Bohinj.',
+    homeIntro:'Mobile-first guide for two adults with children aged 5 and 7. Tracks use BRouter hiking over OpenStreetMap and stay within the 12 km/day target.',
+    hikes:'hikes', maxDay:'max/day', emergency:'emergency', install:'Install',
+    extrasTitle:'Bohinj extras.', extrasIntro:'Food, beaches, ice cream, light and rainy-day fallbacks for the family.',
+    back:'Hikes', download:'Download GPX', google:'Google Maps', mapy:'Mapy.com', apple:'Apple Maps',
+    labels:['Difficulty','Distance','Elevation','Estimated hiking time','Estimated family time','Best time of day','Parking GPS','Parking fee','Drive time from accommodation','Walking time if possible'],
+    familyNotes:'Family notes', services:'Services and treats', views:'Views and photos', routeSource:'Route source',
+    familyLabels:['Family friendliness','What children usually enjoy','Dangerous sections','Weather tips','What to pack','Alternative shorter route','Emergency information'],
+    serviceLabels:['Toilets','Drinking water','Mountain huts','Restaurants','Swimming opportunities','Ice cream stop afterwards'],
+    viewLabels:['Best viewpoints','Best photo spots','Hidden gems'],
+    routeNote:'The GPX track for this hike was generated from BRouter using the hiking profile over OpenStreetMap ways, then embedded here and cached for offline use. Map tiles remain online-only.',
+    extraHeads:['Best restaurants around Bohinj','Best beaches','Best ice cream','Best light','Rainy day alternatives','Emergency numbers'],
+    sunset:'Best sunset', sunrise:'Best sunrise',
+    popups:{home:'Accommodation', park:'Parking', start:'Start', finish:'Finish'},
+    installHelp:'On iPhone: Share -> Add to Home Screen. Service worker/PWA install requires serving this folder over http/https, not file://.'
+  },
+  cs: {
+    brandTitle:'Rodinné túry Bohinj', brandSub:'Základna Ukanc: Apartments Lake Bohinj', extras:'Navíc',
+    homeTitle:'Šest ověřených rodinných túr z Bohinje.',
+    homeIntro:'Mobilní průvodce pro dva dospělé a děti 5 a 7 let. Trasy používají BRouter pro pěší nad OpenStreetMap a drží se limitu 12 km za den.',
+    hikes:'túry', maxDay:'max/den', emergency:'tísňová linka', install:'Instalovat',
+    extrasTitle:'Bohinj navíc.', extrasIntro:'Jídlo, pláže, zmrzlina, nejlepší světlo a náhradní plány do deště pro rodinu.',
+    back:'Túry', download:'Stáhnout GPX', google:'Google Maps', mapy:'Mapy.com', apple:'Apple Maps',
+    labels:['Obtížnost','Vzdálenost','Stoupání','Odhad času chůze','Odhad rodinného času','Nejlepší část dne','GPS parkování','Poplatek za parkování','Dojezd z ubytování','Pěší přístup, pokud dává smysl'],
+    familyNotes:'Poznámky pro rodinu', services:'Služby a odměny', views:'Vyhlídky a fotky', routeSource:'Zdroj trasy',
+    familyLabels:['Vhodnost pro rodinu','Co děti obvykle baví','Nebezpečná místa','Tipy k počasí','Co sbalit','Kratší alternativa','Nouzové informace'],
+    serviceLabels:['Toalety','Pitná voda','Horské chaty','Restaurace','Možnosti koupání','Zmrzlina po výletě'],
+    viewLabels:['Nejlepší vyhlídky','Nejlepší místa na fotky','Skryté tipy'],
+    routeNote:'GPX trasa pro tuto túru byla vygenerována přes BRouter s pěším profilem nad cestami OpenStreetMap, poté vložena do aplikace a uložena pro offline použití. Mapové dlaždice zůstávají pouze online.',
+    extraHeads:['Nejlepší restaurace kolem Bohinje','Nejlepší pláže','Nejlepší zmrzlina','Nejlepší světlo','Alternativy do deště','Tísňová čísla'],
+    sunset:'Nejlepší západ slunce', sunrise:'Nejlepší východ slunce',
+    popups:{home:'Ubytování', park:'Parkování', start:'Start', finish:'Cíl'},
+    installHelp:'Na iPhonu: Sdílet -> Přidat na plochu. Service worker/PWA instalace vyžaduje http/https, ne file://.'
+  }
+};
 
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); state.deferredInstall = e; });
 if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('service-worker.js').catch(()=>{});
@@ -404,39 +674,67 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.ser
 function icon(cls, fa){ return L.divIcon({ className:'', html:\`<div class="marker-dot \${cls}"><i class="fa-solid \${fa}"></i></div>\`, iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-12] }); }
 const icons = {home:icon('m-home','fa-house'),park:icon('m-park','fa-square-parking'),start:icon('m-start','fa-person-hiking'),finish:icon('m-finish','fa-flag-checkered'),hut:icon('m-hut','fa-campground'),food:icon('m-food','fa-utensils'),water:icon('m-water','fa-water'),view:icon('m-view','fa-binoculars'),swim:icon('m-swim','fa-person-swimming'),toilet:icon('m-toilet','fa-restroom'),photo:icon('m-photo','fa-camera')};
 
+function t(){ return I18N[state.lang]; }
+function lh(h){ return state.lang === 'cs' && h.cs ? { ...h, ...h.cs } : h; }
+function lx(){ return state.lang === 'cs' ? APP_DATA.extrasCs : APP_DATA.extras; }
+function elevationText(raw){ return state.lang === 'cs' ? 'cca ' + (raw.ascentMeters || '') + ' m nahoru' : raw.elevation; }
+function setLang(lang){
+ state.lang = lang;
+ localStorage.setItem('bohinj-lang', lang);
+ document.documentElement.lang = lang === 'cs' ? 'cs' : 'en';
+ renderChrome();
+ renderHome();
+ renderExtras();
+ if(state.currentDetail) renderDetail(state.currentDetail, true);
+}
+function renderChrome(){
+ const L=t();
+ $('#brandTitle').textContent=L.brandTitle; $('#brandSub').textContent=L.brandSub; $('#extrasTop').textContent=L.extras;
+ $('#homeTitle').textContent=L.homeTitle; $('#homeIntro').textContent=L.homeIntro;
+ $('#statHikes').textContent=L.hikes; $('#statMax').textContent=L.maxDay; $('#statEmergency').textContent=L.emergency;
+ $('#extrasTitle').textContent=L.extrasTitle; $('#extrasIntro').textContent=L.extrasIntro;
+ $('#tabHikes').textContent=L.back; $('#tabExtras').textContent=L.extras; $('#tabInstall').textContent=L.install;
+ $$('[data-lang]').forEach(b=>b.classList.toggle('active', b.dataset.lang===state.lang));
+}
 function show(tab){ $$('.view').forEach(v=>v.classList.remove('active')); $('#' + tab).classList.add('active'); $$('.tabbar button').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab)); window.scrollTo({top:0,behavior:'smooth'}); }
-function card(h){ return \`<article class="card hike-card" data-id="\${h.id}"><img src="\${h.image}" alt="\${h.title}"><div class="card-body"><h2>\${h.title}</h2><p class="weather">\${h.summary}</p><div class="meta"><span class="chip"><i class="fa-solid fa-gauge-high"></i>\${h.difficulty}</span><span class="chip"><i class="fa-solid fa-route"></i>\${h.distance}</span><span class="chip"><i class="fa-solid fa-arrow-trend-up"></i>\${h.elevation}</span><span class="chip"><i class="fa-regular fa-clock"></i>\${h.familyTime}</span></div><p class="weather"><i class="fa-solid fa-cloud-sun"></i> \${h.weather}</p></div></article>\`; }
+function card(raw){ const h=lh(raw); return \`<article class="card hike-card" data-id="\${raw.id}"><img src="\${raw.image}" alt="\${h.title}"><div class="card-body"><h2>\${h.title}</h2><p class="weather">\${h.summary}</p><div class="meta"><span class="chip"><i class="fa-solid fa-gauge-high"></i>\${h.difficulty}</span><span class="chip"><i class="fa-solid fa-route"></i>\${h.distance}</span><span class="chip"><i class="fa-solid fa-arrow-trend-up"></i>\${elevationText(raw)}</span><span class="chip"><i class="fa-regular fa-clock"></i>\${h.familyTime}</span></div><p class="weather"><i class="fa-solid fa-cloud-sun"></i> \${h.weather}</p></div></article>\`; }
 
 function renderHome(){ $('#cards').innerHTML = APP_DATA.hikes.map(card).join(''); $$('.hike-card').forEach(c=>c.addEventListener('click',()=>renderDetail(c.dataset.id))); }
 function info(label, value){ return \`<div class="info"><span>\${label}</span><b>\${value}</b></div>\`; }
 function list(items){ return \`<div class="list">\${items.map(x=>\`<div>\${x}</div>\`).join('')}</div>\`; }
 function mapsUrl(kind,h){ const p=\`\${h.parking.lat},\${h.parking.lon}\`; if(kind==='google') return \`https://www.google.com/maps/dir/?api=1&destination=\${p}&travelmode=driving\`; if(kind==='apple') return \`https://maps.apple.com/?daddr=\${p}&dirflg=d\`; return \`https://mapy.com/turisticka?x=\${h.parking.lon}&y=\${h.parking.lat}&z=15\`; }
 
-function renderDetail(id){
- const h = APP_DATA.hikes.find(x=>x.id===id);
- $('#detail').innerHTML = \`<button class="back" id="backBtn"><i class="fa-solid fa-chevron-left"></i> Hikes</button><div class="detail-hero"><img src="\${h.image}" alt="\${h.title}"><div class="detail-hero-content"><h1>\${h.title}</h1><p>\${h.summary}</p><div class="meta"><span class="chip">\${h.difficulty}</span><span class="chip">\${h.distance}</span><span class="chip">\${h.elevation}</span></div><div class="credit">\${h.imageCredit || ''}</div></div></div>
+function renderDetail(id, keepScroll=false){
+ state.currentDetail = id;
+ const raw = APP_DATA.hikes.find(x=>x.id===id);
+ const h = lh(raw);
+ const L = t();
+ $('#detail').innerHTML = \`<button class="back" id="backBtn"><i class="fa-solid fa-chevron-left"></i> \${L.back}</button><div class="detail-hero"><img src="\${raw.image}" alt="\${h.title}"><div class="detail-hero-content"><h1>\${h.title}</h1><p>\${h.summary}</p><div class="meta"><span class="chip">\${h.difficulty}</span><span class="chip">\${h.distance}</span><span class="chip">\${elevationText(raw)}</span></div><div class="credit">\${h.imageCredit || ''}</div></div></div>
  <div class="section"><div class="panel"><div id="map-\${h.id}" class="map"></div></div>
- <div class="panel actions"><a class="btn" download href="\${h.gpx}"><i class="fa-solid fa-download"></i>Download GPX</a><a class="btn secondary" target="_blank" href="\${mapsUrl('google',h)}"><i class="fa-brands fa-google"></i>Google Maps</a><a class="btn secondary" target="_blank" href="\${mapsUrl('mapy',h)}"><i class="fa-solid fa-map"></i>Mapy.com</a><a class="btn secondary" target="_blank" href="\${mapsUrl('apple',h)}"><i class="fa-brands fa-apple"></i>Apple Maps</a></div>
- <div class="panel grid">\${info('Difficulty',h.difficulty)}\${info('Distance',h.distance)}\${info('Elevation',h.elevation)}\${info('Estimated hiking time',h.hikingTime)}\${info('Estimated family time',h.familyTime)}\${info('Best time of day',h.bestTime)}\${info('Parking GPS',\`\${h.parking.name}: \${h.parking.lat.toFixed(5)}, \${h.parking.lon.toFixed(5)}\`)}\${info('Parking fee',h.parking.fee)}\${info('Drive time from accommodation',h.drive)}\${info('Walking time if possible',h.walk)}</div>
- <div class="two"><div class="panel"><h3>Family notes</h3>\${info('Family friendliness',h.family)}\${info('What children usually enjoy',h.kids)}\${info('Dangerous sections',h.danger)}\${info('Weather tips',h.weather)}\${info('What to pack',h.pack)}\${info('Alternative shorter route',h.shorter)}\${info('Emergency information',h.emergency)}</div>
- <div class="panel"><h3>Services and treats</h3>\${info('Toilets',h.toilets)}\${info('Drinking water',h.water)}\${info('Mountain huts',h.huts)}\${info('Restaurants',h.restaurants)}\${info('Swimming opportunities',h.swimming)}\${info('Ice cream stop afterwards',h.iceCream)}</div></div>
- <div class="two"><div class="panel"><h3>Views and photos</h3>\${info('Best viewpoints',list(h.viewpoints))}\${info('Best photo spots',list(h.photo))}\${info('Hidden gems',h.hidden)}</div><div class="panel"><h3>Route source</h3><p class="weather">The GPX track for this hike was generated from BRouter using the hiking profile over OpenStreetMap ways, then embedded here and cached for offline use. Map tiles remain online-only.</p></div></div></div>\`;
+ <div class="panel actions"><a class="btn" download href="\${raw.gpx}"><i class="fa-solid fa-download"></i>\${L.download}</a><a class="btn secondary" target="_blank" href="\${mapsUrl('google',raw)}"><i class="fa-brands fa-google"></i>\${L.google}</a><a class="btn secondary" target="_blank" href="\${mapsUrl('mapy',raw)}"><i class="fa-solid fa-map"></i>\${L.mapy}</a><a class="btn secondary" target="_blank" href="\${mapsUrl('apple',raw)}"><i class="fa-brands fa-apple"></i>\${L.apple}</a></div>
+ <div class="panel grid">\${info(L.labels[0],h.difficulty)}\${info(L.labels[1],h.distance)}\${info(L.labels[2],elevationText(raw))}\${info(L.labels[3],h.hikingTime)}\${info(L.labels[4],h.familyTime)}\${info(L.labels[5],h.bestTime)}\${info(L.labels[6],\`\${raw.parking.name}: \${raw.parking.lat.toFixed(5)}, \${raw.parking.lon.toFixed(5)}\`)}\${info(L.labels[7],h.parkingFee || raw.parking.fee)}\${info(L.labels[8],h.drive)}\${info(L.labels[9],h.walk)}</div>
+ <div class="two"><div class="panel"><h3>\${L.familyNotes}</h3>\${info(L.familyLabels[0],h.family)}\${info(L.familyLabels[1],h.kids)}\${info(L.familyLabels[2],h.danger)}\${info(L.familyLabels[3],h.weather)}\${info(L.familyLabels[4],h.pack)}\${info(L.familyLabels[5],h.shorter)}\${info(L.familyLabels[6],h.emergency)}</div>
+ <div class="panel"><h3>\${L.services}</h3>\${info(L.serviceLabels[0],h.toilets)}\${info(L.serviceLabels[1],h.water)}\${info(L.serviceLabels[2],h.huts)}\${info(L.serviceLabels[3],h.restaurants)}\${info(L.serviceLabels[4],h.swimming)}\${info(L.serviceLabels[5],h.iceCream)}</div></div>
+ <div class="two"><div class="panel"><h3>\${L.views}</h3>\${info(L.viewLabels[0],list(h.viewpoints))}\${info(L.viewLabels[1],list(h.photo))}\${info(L.viewLabels[2],h.hidden)}</div><div class="panel"><h3>\${L.routeSource}</h3><p class="weather">\${L.routeNote}</p></div></div></div>\`;
  $('#backBtn').addEventListener('click',()=>show('home'));
  show('detail');
- setTimeout(()=>initMap(h), 80);
+ delete state.maps[raw.id];
+ setTimeout(()=>initMap(raw), 80);
+ if(keepScroll) window.scrollTo({top:0,behavior:'auto'});
 }
 
 async function initMap(h){
  const el = $('#map-' + h.id); if(!el || state.maps[h.id]) return;
+ const LBL = t().popups;
  const map = L.map(el, { scrollWheelZoom:false });
  state.maps[h.id]=map;
  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
  const bounds = [];
  function mark(p, label, ic){ L.marker([p.lat,p.lon],{icon:ic}).addTo(map).bindPopup(label); bounds.push([p.lat,p.lon]); }
- mark(APP_DATA.accommodation, '<b>Accommodation</b><br>'+APP_DATA.accommodation.address, icons.home);
- mark(h.parking, '<b>Parking</b><br>'+h.parking.name, icons.park);
- mark(h.start, '<b>Start</b><br>'+h.start.name, icons.start);
- mark(h.finish, '<b>Finish</b><br>'+h.finish.name, icons.finish);
+ mark(APP_DATA.accommodation, '<b>'+LBL.home+'</b><br>'+APP_DATA.accommodation.address, icons.home);
+ mark(h.parking, '<b>'+LBL.park+'</b><br>'+h.parking.name, icons.park);
+ mark(h.start, '<b>'+LBL.start+'</b><br>'+h.start.name, icons.start);
+ mark(h.finish, '<b>'+LBL.finish+'</b><br>'+h.finish.name, icons.finish);
  const groups = [['huts',icons.hut],['restaurants',icons.food],['waterfalls',icons.water],['viewpoints',icons.view],['swimming',icons.swim],['toilets',icons.toilet],['photos',icons.photo]];
  groups.forEach(([key,ic]) => (h.pois[key]||[]).forEach(p=>mark(p, '<b>'+p.name+'</b>', ic)));
  const pts = h.track && h.track.length ? h.track : h.route.map(p=>[p[1],p[0]]);
@@ -447,22 +745,24 @@ async function initMap(h){
 }
 
 function renderExtras(){
- const e = APP_DATA.extras;
- $('#extrasContent').innerHTML = \`<div class="two"><div class="panel"><h3>Best restaurants around Bohinj</h3>\${list(e.restaurants.map(r=>\`<b>\${r[0]}</b><br>\${r[1]}\`))}</div><div class="panel"><h3>Best beaches</h3>\${list(e.beaches.map(r=>\`<b>\${r[0]}</b><br>\${r[1]}\`))}</div><div class="panel"><h3>Best ice cream</h3>\${list(e.icecream.map(r=>\`<b>\${r[0]}</b><br>\${r[1]}\`))}</div><div class="panel"><h3>Best light</h3>\${info('Best sunset',e.sunset)}\${info('Best sunrise',e.sunrise)}</div><div class="panel"><h3>Rainy day alternatives</h3>\${list(e.rainy)}</div><div class="panel"><h3>Emergency numbers</h3>\${list(e.emergency)}</div></div>\`;
+ const e = lx();
+ const L = t();
+ $('#extrasContent').innerHTML = \`<div class="two"><div class="panel"><h3>\${L.extraHeads[0]}</h3>\${list(e.restaurants.map(r=>\`<b>\${r[0]}</b><br>\${r[1]}\`))}</div><div class="panel"><h3>\${L.extraHeads[1]}</h3>\${list(e.beaches.map(r=>\`<b>\${r[0]}</b><br>\${r[1]}\`))}</div><div class="panel"><h3>\${L.extraHeads[2]}</h3>\${list(e.icecream.map(r=>\`<b>\${r[0]}</b><br>\${r[1]}\`))}</div><div class="panel"><h3>\${L.extraHeads[3]}</h3>\${info(L.sunset,e.sunset)}\${info(L.sunrise,e.sunrise)}</div><div class="panel"><h3>\${L.extraHeads[4]}</h3>\${list(e.rainy)}</div><div class="panel"><h3>\${L.extraHeads[5]}</h3>\${list(e.emergency)}</div></div>\`;
 }
 
 document.addEventListener('click', async e => {
  const tab = e.target.closest('[data-tab]')?.dataset.tab; if(tab) { e.preventDefault(); show(tab); }
- if(e.target.closest('[data-action="install"]')) { if(state.deferredInstall){ state.deferredInstall.prompt(); } else { alert('On iPhone: Share → Add to Home Screen. Service worker/PWA install requires serving this folder over http/https, not file://.'); } }
+ const lang = e.target.closest('[data-lang]')?.dataset.lang; if(lang) setLang(lang);
+ if(e.target.closest('[data-action="install"]')) { if(state.deferredInstall){ state.deferredInstall.prompt(); } else { alert(t().installHelp); } }
 });
-renderHome(); renderExtras();
+renderChrome(); renderHome(); renderExtras();
 </script>
 </body></html>`;
 }
 
 function makeServiceWorker() {
   const assets = ['index.html','manifest.json',...hikes.map(h=>h.gpx),...hikes.map(h=>h.image),'icons/icon-192.svg','icons/icon-512.svg'];
-  return `const CACHE='bohinj-family-hikes-v1';
+  return `const CACHE='bohinj-family-hikes-v3-czech-pericnik-photo';
 const ASSETS=${JSON.stringify(assets)};
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
