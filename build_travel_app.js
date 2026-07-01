@@ -961,6 +961,7 @@ function makeHtml() {
 @media (prefers-color-scheme:dark){:root{--bg:#101412;--ink:#f2f5f1;--muted:#a8b3ad;--card:#1b211e;--line:rgba(242,245,241,.14);--brand:#37c3b6;--brand2:#8ab4ff;--warn:#f4b66f;--shadow:0 18px 50px rgba(0,0,0,.45)}}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}button,a{touch-action:manipulation}a{color:inherit}.app{min-height:100vh;padding-bottom:calc(86px + var(--safe-bottom))}.topbar{position:sticky;top:0;z-index:30;padding:calc(10px + var(--safe-top)) 16px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}.brand{min-width:0;flex:1}.brand strong{display:block;font-size:18px;letter-spacing:0}.brand span{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:10px 12px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.05)}.lang-toggle{display:flex;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;box-shadow:0 8px 24px rgba(0,0,0,.05)}.lang-toggle button{border:0;background:transparent;color:var(--muted);border-radius:999px;padding:8px 9px;font-weight:800;font-size:12px}.lang-toggle button.active{background:var(--brand);color:white}main{max-width:1100px;margin:0 auto}.hero{padding:18px 16px 6px}.hero h1{font-size:34px;line-height:1.02;margin:6px 0 10px;letter-spacing:0}.hero p{margin:0;color:var(--muted);font-size:16px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;min-width:0}.stat b{display:block;font-size:18px}.stat span{font-size:12px;color:var(--muted)}.cards{display:grid;gap:16px;padding:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.hike-card{cursor:pointer}.hike-card img{width:100%;height:210px;object-fit:cover;display:block;background:#dfe7e3}.card-body{padding:16px}.card h2,.card h3{margin:0 0 8px;letter-spacing:0}.card h2{font-size:23px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{font-size:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--card) 88%,var(--brand) 12%);padding:7px 9px;border-radius:999px;color:var(--ink);display:inline-flex;gap:6px;align-items:center}.weather{color:var(--muted);font-size:14px}.view{display:none}.view.active{display:block}.detail-hero{position:relative;min-height:420px;display:flex;align-items:flex-end;background:#26322f;overflow:hidden}.detail-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}.detail-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.74))}.detail-hero-content{position:relative;z-index:1;padding:70px 16px 22px;color:white;width:100%;max-width:1100px;margin:0 auto}.back{position:absolute;top:calc(14px + var(--safe-top));left:16px;z-index:3;background:rgba(255,255,255,.9);color:#17201d;border:0;border-radius:999px;padding:11px 13px;font-weight:700}.detail-hero h1{font-size:34px;line-height:1.02;margin:0 0 10px}.detail-hero p{margin:0;color:rgba(255,255,255,.86)}.section{padding:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);margin-bottom:16px}.grid{display:grid;grid-template-columns:1fr;gap:12px}.info{border-bottom:1px solid var(--line);padding:10px 0}.info:last-child{border-bottom:0}.info span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.info b{display:block;margin-top:3px}.map{height:390px;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#dbe4df}.actions{display:grid;grid-template-columns:1fr;gap:10px}.btn{border:0;border-radius:16px;padding:14px 15px;background:var(--brand);color:white;font-weight:750;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px}.btn.secondary{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn.blue{background:var(--brand2)}.list{display:grid;gap:10px;margin:10px 0 0}.list div{padding:11px 12px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--card) 92%,var(--brand) 8%)}.two{display:grid;gap:16px}.credit{font-size:11px;color:rgba(255,255,255,.72);margin-top:10px}.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:9px 12px calc(9px + var(--safe-bottom));background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tabbar button{border:0;border-radius:16px;background:transparent;color:var(--muted);padding:9px 6px;font-size:12px;font-weight:700}.tabbar button.active{background:var(--card);color:var(--brand);box-shadow:0 8px 24px rgba(0,0,0,.08)}.tabbar i{display:block;font-size:18px;margin-bottom:3px}.leaflet-popup-content{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.marker-dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;box-shadow:0 4px 12px rgba(0,0,0,.3);font-size:12px}.m-home{background:#0b7a75}.m-park{background:#334155}.m-start{background:#2d6cdf}.m-finish{background:#7c3aed}.m-hut{background:#b45309}.m-food{background:#dc2626}.m-water{background:#0284c7}.m-view{background:#16a34a}.m-swim{background:#0891b2}.m-toilet{background:#64748b}.m-photo{background:#db2777}
 .gallery{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 12px;margin:8px -2px 0;-webkit-overflow-scrolling:touch}.gallery figure{margin:0;min-width:78%;scroll-snap-align:start;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 26px rgba(0,0,0,.08)}.gallery img{width:100%;height:240px;display:block;object-fit:cover;background:#dfe7e3}.gallery figcaption{padding:9px 11px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dashboard-wrap{padding:16px 16px 4px}.dash-card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}.dash-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.dash-kicker{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:800}.dash-date{font-size:14px;color:var(--muted);margin-top:3px}.dash-weather{display:flex;gap:14px;align-items:center;margin:16px 0}.dash-weather i{font-size:42px;color:var(--brand2)}.dash-temp{font-size:42px;line-height:1;font-weight:850}.dash-summary{color:var(--muted);font-size:14px}.status-pill{border-radius:999px;padding:8px 10px;font-weight:850;font-size:12px;white-space:nowrap}.status-green{background:#dcfce7;color:#166534}.status-yellow{background:#fef3c7;color:#92400e}.status-red{background:#fee2e2;color:#991b1b}.dash-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.dash-metric{border:1px solid var(--line);border-radius:18px;padding:10px;background:color-mix(in srgb,var(--card) 90%,var(--brand) 10%)}.dash-metric span{display:block;color:var(--muted);font-size:11px}.dash-metric b{display:block;margin-top:2px;font-size:15px}.energy{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.energy button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:15px;padding:11px 8px;font-weight:800}.energy button.active{background:var(--brand);border-color:var(--brand);color:white}.recommend h2{font-size:28px;line-height:1.05;margin:8px 0}.recommend p{color:var(--muted);margin:8px 0}.dash-actions{display:grid;gap:10px;margin-top:14px}.btn.danger{background:#dc2626}.checklist{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}.checklist label{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 11px;background:color-mix(in srgb,var(--card) 94%,var(--brand) 6%);font-weight:700}.checklist input{width:20px;height:20px;accent-color:var(--brand)}.timeline{display:grid;gap:8px;margin-top:10px}.timeline-row{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:start}.timeline-time{font-weight:850;color:var(--brand)}.timeline-text{border-bottom:1px solid var(--line);padding-bottom:8px}.modal-backdrop{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.52);display:none;align-items:flex-end}.modal-backdrop.active{display:flex}.modal{width:100%;max-width:720px;margin:0 auto;background:var(--card);color:var(--ink);border-radius:28px 28px 0 0;padding:18px 16px calc(20px + var(--safe-bottom));box-shadow:0 -20px 60px rgba(0,0,0,.35)}.modal h2{margin:0 0 8px;font-size:28px}.modal .emergency-number{font-size:44px;font-weight:900;color:#dc2626}.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 @media (min-width:720px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.actions{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1fr 1fr}.hero h1,.detail-hero h1{font-size:48px}.detail-hero{min-height:520px}.map{height:500px}.gallery figure{min-width:42%}}
 </style>
 </head>
@@ -969,6 +970,7 @@ function makeHtml() {
 <header class="topbar"><div class="brand"><strong id="brandTitle">Bohinj Family Hikes</strong><span id="brandSub">Ukanc base: Apartments Lake Bohinj</span></div><div class="lang-toggle" aria-label="Language"><button data-lang="en" class="active">EN</button><button data-lang="cs">CZ</button></div><a class="pill" href="#extras" data-tab="extras"><i class="fa-solid fa-circle-info"></i> <span id="extrasTop">Extras</span></a></header>
 <main>
 <section id="home" class="view active">
+<div class="dashboard-wrap" id="dashboard"></div>
 <div class="hero"><h1 id="homeTitle">Six verified family hikes from Bohinj.</h1><p id="homeIntro">Mobile-first guide for two adults with children aged 5 and 7. Tracks use BRouter hiking over OpenStreetMap and stay within the 12 km/day target.</p><div class="stats"><div class="stat"><b>6</b><span id="statHikes">hikes</span></div><div class="stat"><b>12 km</b><span id="statMax">max/day</span></div><div class="stat"><b>112</b><span id="statEmergency">emergency</span></div></div></div>
 <div class="cards" id="cards"></div>
 </section>
@@ -980,9 +982,17 @@ function makeHtml() {
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
 const APP_DATA = ${appData};
-const state = { maps: {}, deferredInstall: null, lang: localStorage.getItem('bohinj-lang') || 'en', currentDetail: null };
+const state = { maps: {}, deferredInstall: null, lang: localStorage.getItem('bohinj-lang') || 'en', currentDetail: null, energy: localStorage.getItem('bohinj-energy') || 'normal', weather: null, recommendation: null, gps: null };
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+const HIKE_PROFILE = {
+  'savica-lakeshore': { exposure:1, shade:2, child:5, food:4, swim:5, staticScore:85, start:'09:00', duration:4.25, main:'Savica Waterfall viewpoint', short:true, stormAvoid:3 },
+  'vogel-panorama': { exposure:5, shade:1, child:4, food:5, swim:4, staticScore:72, start:'08:30', duration:4, main:'Vogel panorama deck', needsClear:true, windSensitive:true, stormAvoid:5 },
+  'mostnica-voje': { exposure:2, shade:5, child:4, food:4, swim:2, staticScore:80, start:'08:30', duration:5, main:'Mostnica gorge bridges / Voje meadow', long:true, stormAvoid:4 },
+  'planina-blato-jezeru': { exposure:4, shade:3, child:3, food:4, swim:1, staticScore:66, start:'08:00', duration:5, main:'Planina pri Jezeru lake and hut', stableOnly:true, stormAvoid:5 },
+  'planina-zajamniki': { exposure:4, shade:2, child:3, food:2, swim:1, staticScore:62, start:'08:00', duration:5, main:'Zajamniki shepherd huts viewpoint', stableOnly:true, visibility:true, stormAvoid:5 },
+  'pericnik-waterfall': { exposure:2, shade:3, child:4, food:3, swim:0, staticScore:70, start:'09:00', duration:2.25, main:'Lower Peričnik waterfall', cloudyGood:true, stormAvoid:5 }
+};
 const I18N = {
   en: {
     brandTitle:'Bohinj Family Hikes', brandSub:'Ukanc base: Apartments Lake Bohinj', extras:'Extras',
@@ -1037,6 +1047,7 @@ function setLang(lang){
  localStorage.setItem('bohinj-lang', lang);
  document.documentElement.lang = lang === 'cs' ? 'cs' : 'en';
  renderChrome();
+ renderDashboard();
  renderHome();
  renderExtras();
  if(state.currentDetail) renderDetail(state.currentDetail, true);
@@ -1058,6 +1069,100 @@ function info(label, value){ return \`<div class="info"><span>\${label}</span><b
 function list(items){ return \`<div class="list">\${items.map(x=>\`<div>\${x}</div>\`).join('')}</div>\`; }
 function galleryHtml(raw){ const items = raw.gallery || []; if(!items.length) return ''; return \`<div class="panel"><h3>\${t().photoGallery}</h3><div class="gallery">\${items.map((item,index)=>\`<figure><img src="\${item.src}" alt="\${item.title || raw.title}"><figcaption>\${item.title || ('Photo ' + (index + 1))}</figcaption></figure>\`).join('')}</div></div>\`; }
 function mapsUrl(kind,h){ const p=\`\${h.parking.lat},\${h.parking.lon}\`; if(kind==='google') return \`https://www.google.com/maps/dir/?api=1&destination=\${p}&travelmode=driving\`; if(kind==='apple') return \`https://maps.apple.com/?daddr=\${p}&dirflg=d\`; return \`https://mapy.com/turisticka?x=\${h.parking.lon}&y=\${h.parking.lat}&z=15\`; }
+
+function fmtTime(date){ return date.toLocaleTimeString(state.lang === 'cs' ? 'cs-CZ' : 'en-GB', {hour:'2-digit', minute:'2-digit'}); }
+function addHours(base, hours){ return new Date(base.getTime() + hours * 3600000); }
+function weatherIcon(code, thunder){ if(thunder) return 'fa-cloud-bolt'; if(code === null || code === undefined) return 'fa-cloud-sun'; if([0,1].includes(code)) return 'fa-sun'; if([2,3].includes(code)) return 'fa-cloud-sun'; if(code >= 51 && code <= 67) return 'fa-cloud-rain'; if(code >= 80 && code <= 82) return 'fa-cloud-showers-heavy'; if(code >= 95) return 'fa-cloud-bolt'; return 'fa-cloud'; }
+function weatherText(w){ if(!w || !w.live) return state.lang === 'cs' ? 'Živé počasí není dostupné' : 'Live weather unavailable'; if(w.thunder) return state.lang === 'cs' ? 'Možné bouřky' : 'Thunderstorms possible'; if(w.rain >= 55) return state.lang === 'cs' ? 'Vysoká šance deště' : 'High chance of rain'; if(w.rain >= 30) return state.lang === 'cs' ? 'Možný déšť' : 'Rain possible'; if(w.code <= 1) return state.lang === 'cs' ? 'Jasno' : 'Clear'; if(w.code <= 3) return state.lang === 'cs' ? 'Polojasno' : 'Partly cloudy'; return state.lang === 'cs' ? 'Proměnlivo' : 'Mixed weather'; }
+function dashboardStrings(){
+ return state.lang === 'cs' ? {
+  title:'Dnešní plán', liveFallback:'Živé počasí není dostupné — doporučení vychází z obtížnosti trasy a vhodnosti pro rodinu.', temp:'Teplota', rain:'Déšť', wind:'Vítr', sunset:'Západ', thunder:'Bouřky', recommend:'Doporučená túra', reason:'Proč dnes', depart:'Odjezd', return:'Návrat', swim:'Koupání po túře', energy:'Rodinná energie', great:'Skvělá', normal:'Normální', tired:'Unavení', start:'Začít dnešní plán', nav:'Navigovat na parkování', details:'Otevřít detail túry', pack:'Co sbalit', timeline:'Dnešní harmonogram', emergency:'Nouzové info', call:'Volat 112', close:'Zavřít', gps:'Aktuální GPS', gpsAsk:'Získat GPS polohu', gpsUnknown:'GPS zatím není k dispozici', accommodation:'Ubytování', nearestParking:'Parkování dnešní túry', danger:'Pokud jste v nebezpečí, volejte 112 a sdílejte svou GPS polohu.', swimYes:'Ano, vezměte plavky a ručníky.', swimMaybe:'Možná, podle počasí a energie dětí.', swimNo:'Dnes raději bez koupání.', statusGood:'Dobré', statusOk:'Opatrně', statusBad:'Nevhodné'
+ } : {
+  title:'Vacation Dashboard', liveFallback:'Live weather unavailable — recommendations are based on route difficulty and family suitability.', temp:'Temperature', rain:'Rain', wind:'Wind', sunset:'Sunset', thunder:'Storms', recommend:'Recommended hike', reason:'Why today', depart:'Depart', return:'Return', swim:'Swim after hike', energy:'Family energy', great:'Great', normal:'Normal', tired:'Tired', start:'Start today’s plan', nav:'Navigate to parking', details:'Open hike details', pack:'What to pack', timeline:'Today’s timeline', emergency:'Emergency', call:'Call 112', close:'Close', gps:'Current GPS', gpsAsk:'Get GPS location', gpsUnknown:'GPS not available yet', accommodation:'Accommodation', nearestParking:'Today’s nearest parking', danger:'If in danger, call 112 and share your GPS location.', swimYes:'Yes, pack swimwear and towels.', swimMaybe:'Maybe, depending on weather and kids’ energy.', swimNo:'Skip swimming today.', statusGood:'Good', statusOk:'Caution', statusBad:'Avoid'
+ };
+}
+function staticWeather(){ return { live:false, temp:null, rain:null, wind:null, thunder:false, sunset:null, code:null }; }
+async function loadWeather(){
+ try{
+  const url='https://api.open-meteo.com/v1/forecast?latitude=46.278&longitude=13.835&current=temperature_2m,weather_code,wind_speed_10m&daily=precipitation_probability_max,sunset,weather_code&timezone=Europe%2FPrague&forecast_days=1';
+  const r=await fetch(url);
+  if(!r.ok) throw new Error('weather '+r.status);
+  const d=await r.json();
+  state.weather={ live:true, temp:Math.round(d.current.temperature_2m), rain:d.daily.precipitation_probability_max[0] || 0, wind:Math.round(d.current.wind_speed_10m || 0), thunder:(d.daily.weather_code[0] || d.current.weather_code || 0) >= 95, sunset:d.daily.sunset[0], code:d.current.weather_code };
+ } catch(e){ state.weather=staticWeather(); }
+ state.recommendation=recommendHike();
+ renderDashboard();
+}
+function recommendHike(){
+ const w=state.weather || staticWeather();
+ let best=null;
+ for(const raw of APP_DATA.hikes){
+  const p=HIKE_PROFILE[raw.id];
+  let score=p.staticScore + p.child*5 + p.food*2 - (raw.distanceMeters || 0)/1000;
+  const reasons=[];
+  if(state.energy==='tired'){ score += p.short ? 24 : -18; score -= p.long ? 18 : 0; }
+  if(state.energy==='great'){ score += p.long || p.stableOnly ? 8 : 0; }
+  if(w.live){
+   score -= (w.rain || 0) * (p.stormAvoid || 3) / 12;
+   score -= w.thunder ? (p.stormAvoid || 3) * 12 : 0;
+   score -= Math.max(0,(w.wind || 0)-18) * (p.exposure || 2) / 3;
+   if((w.temp || 0) >= 25){ score += p.shade*6; if(raw.id==='mostnica-voje') reasons.push(state.lang==='cs'?'stín soutěsky a voda pomůžou v horku':'shade and water make it strong in hot weather'); }
+   if((w.temp || 20) < 16) score -= p.exposure*3;
+   if(p.needsClear && ((w.rain||0)>25 || (w.wind||0)>22 || w.thunder)) score -= 45;
+   if(p.stableOnly && ((w.rain||0)>25 || w.thunder || (w.wind||0)>24)) score -= 45;
+   if(p.cloudyGood && (w.rain||0) < 35 && !w.thunder) score += 8;
+  }
+  if(raw.id==='savica-lakeshore') reasons.push(state.lang==='cs'?'snadná a pružná volba pro rodinu':'easy, flexible family option');
+  if(raw.id==='vogel-panorama') reasons.push(state.lang==='cs'?'nejlepší jen za dobré viditelnosti a slabého větru':'best only with clear visibility and low wind');
+  if(raw.id==='pericnik-waterfall') reasons.push(state.lang==='cs'?'dobré i za oblačna, ale ne při bouřkách':'good in cloudy weather, but avoid storms');
+  if(!best || score>best.score) best={ raw, score, reasons };
+ }
+ const status = !w.live ? 'yellow' : (w.thunder || (w.rain||0)>65 ? 'red' : ((w.rain||0)>30 || (w.wind||0)>25 ? 'yellow' : 'green'));
+ const reason = best.reasons[0] || (state.lang==='cs'?'dnes má nejlepší kombinaci počasí, obtížnosti a rodinné vhodnosti':'best balance of weather, difficulty and family suitability today');
+ return { hike: best.raw, status, reason };
+}
+function buildPacking(hike){
+ const w=state.weather || staticWeather();
+ const items= state.lang==='cs' ? ['Voda','Svačina','Turistické boty','Opalovací krém','Malá lékárnička'] : ['Water','Snacks','Hiking shoes','Sunscreen','Small first aid kit'];
+ if((w.rain||0)>30) items.push(...(state.lang==='cs'?['Pláštěnky','Obal na batoh']:['Rain jackets','Backpack cover']));
+ if(w.live && w.temp<16) items.push(state.lang==='cs'?'Teplé vrstvy':'Warm layers');
+ if(['vogel-panorama','planina-blato-jezeru','planina-zajamniki'].includes(hike.id)) items.push(...(state.lang==='cs'?['Větrovka','Extra svačina','Více vody']:['Wind jacket','Extra snacks','More water']));
+ if(swimRecommendation(hike).yes) items.push(...(state.lang==='cs'?['Plavky','Ručníky']:['Swimwear','Towels']));
+ return [...new Set(items)];
+}
+function swimRecommendation(hike){
+ const w=state.weather || staticWeather();
+ if(['savica-lakeshore','vogel-panorama','mostnica-voje','planina-blato-jezeru','planina-zajamniki'].includes(hike.id) && (!w.live || ((w.temp||22)>=20 && (w.rain||0)<45 && !w.thunder))) return { yes:true, text:dashboardStrings().swimYes };
+ if(hike.id==='pericnik-waterfall') return { yes:false, text:dashboardStrings().swimNo };
+ return { yes:false, text:dashboardStrings().swimMaybe };
+}
+function timelineFor(hike){
+ const p=HIKE_PROFILE[hike.id]; const base=new Date(); const parts=p.start.split(':'); base.setHours(Number(parts[0]),Number(parts[1]),0,0);
+ const driveMins = hike.id==='pericnik-waterfall' ? 85 : hike.id==='planina-zajamniki' ? 55 : hike.id==='planina-blato-jezeru' ? 45 : hike.id==='mostnica-voje' ? 20 : hike.id==='vogel-panorama' ? 10 : 10;
+ return [
+  [fmtTime(base), state.lang==='cs'?'Odjezd z ubytování':'Leave accommodation'],
+  [fmtTime(addHours(base, driveMins/60)), state.lang==='cs'?'Start túry':'Start hike'],
+  [fmtTime(addHours(base, driveMins/60 + p.duration*.38)), p.main],
+  [fmtTime(addHours(base, driveMins/60 + p.duration*.58)), state.lang==='cs'?'Oběd / chata / svačina':'Lunch / hut / snack stop'],
+  [fmtTime(addHours(base, driveMins/60 + p.duration)), state.lang==='cs'?'Návrat k autu':'Return to car'],
+  [fmtTime(addHours(base, driveMins/60 + p.duration + 1)), swimRecommendation(hike).yes ? (state.lang==='cs'?'Koupání / zmrzlina':'Swim / ice cream') : (state.lang==='cs'?'Zmrzlina / odpočinek':'Ice cream / rest')]
+ ];
+}
+function renderDashboard(){
+ const root=$('#dashboard'); if(!root) return;
+ if(!state.recommendation) state.recommendation=recommendHike();
+ const L=dashboardStrings(); const rec=state.recommendation; const h=lh(rec.hike); const w=state.weather || staticWeather(); const swim=swimRecommendation(rec.hike); const p=HIKE_PROFILE[rec.hike.id];
+ const departParts=p.start.split(':'); const depart=new Date(); depart.setHours(Number(departParts[0]),Number(departParts[1]),0,0); const ret=addHours(depart,p.duration + (rec.hike.id==='pericnik-waterfall'?1.5: rec.hike.id==='planina-zajamniki'?1: .5));
+ const statusText=rec.status==='green'?L.statusGood:(rec.status==='red'?L.statusBad:L.statusOk);
+ root.innerHTML='<div class="dash-card"><div class="dash-top"><div><div class="dash-kicker">'+L.title+'</div><div class="dash-date">'+new Date().toLocaleDateString(state.lang==='cs'?'cs-CZ':'en-US',{weekday:'long',month:'long',day:'numeric'})+'</div></div><span class="status-pill status-'+rec.status+'">'+statusText+'</span></div><div class="dash-weather"><i class="fa-solid '+weatherIcon(w.code,w.thunder)+'"></i><div><div class="dash-temp">'+(w.live?w.temp+'°C':'--')+'</div><div class="dash-summary">'+weatherText(w)+'</div></div></div>'+(!w.live?'<p class="weather">'+L.liveFallback+'</p>':'')+'<div class="dash-metrics"><div class="dash-metric"><span>'+L.rain+'</span><b>'+(w.live?w.rain+'%':'--')+'</b></div><div class="dash-metric"><span>'+L.wind+'</span><b>'+(w.live?w.wind+' km/h':'--')+'</b></div><div class="dash-metric"><span>'+L.sunset+'</span><b>'+(w.live?fmtTime(new Date(w.sunset)):'--')+'</b></div></div><div class="dash-kicker" style="margin-top:16px">'+L.energy+'</div><div class="energy"><button data-energy="great">'+L.great+'</button><button data-energy="normal">'+L.normal+'</button><button data-energy="tired">'+L.tired+'</button></div></div><div class="dash-card recommend"><div class="dash-kicker">'+L.recommend+'</div><h2>'+h.title+'</h2><p><b>'+L.reason+':</b> '+rec.reason+'</p><div class="dash-metrics"><div class="dash-metric"><span>'+L.depart+'</span><b>'+fmtTime(depart)+'</b></div><div class="dash-metric"><span>'+L.return+'</span><b>'+fmtTime(ret)+'</b></div><div class="dash-metric"><span>'+L.swim+'</span><b>'+(swim.yes?'Yes':'Maybe')+'</b></div></div><p>'+swim.text+'</p><div class="dash-actions"><button class="btn" data-start-plan><i class="fa-solid fa-play"></i>'+L.start+'</button><a class="btn secondary" target="_blank" href="'+mapsUrl('google',rec.hike)+'"><i class="fa-solid fa-diamond-turn-right"></i>'+L.nav+'</a><button class="btn secondary" data-open-rec><i class="fa-solid fa-circle-info"></i>'+L.details+'</button><button class="btn danger" data-emergency><i class="fa-solid fa-triangle-exclamation"></i>'+L.emergency+'</button></div></div><div class="two"><div class="dash-card"><h3>'+L.pack+'</h3><div class="checklist">'+buildPacking(rec.hike).map(function(item){return '<label><input type="checkbox"> '+item+'</label>';}).join('')+'</div></div><div class="dash-card"><h3>'+L.timeline+'</h3><div class="timeline">'+timelineFor(rec.hike).map(function(row){return '<div class="timeline-row"><div class="timeline-time">'+row[0]+'</div><div class="timeline-text">'+row[1]+'</div></div>';}).join('')+'</div></div></div>';
+ $$('.energy button',root).forEach(function(b){ b.classList.toggle('active', b.dataset.energy===state.energy); });
+}
+function openEmergencyModal(){
+ const L=dashboardStrings(); const rec=state.recommendation || recommendHike(); const loc=state.gps ? (state.gps.latitude.toFixed(5)+', '+state.gps.longitude.toFixed(5)) : L.gpsUnknown;
+ let modal=$('#emergencyModal'); if(!modal){ document.body.insertAdjacentHTML('beforeend','<div class="modal-backdrop" id="emergencyModal"><div class="modal"><h2>'+L.emergency+'</h2><div class="emergency-number">112</div><div id="emergencyBody"></div><div class="modal-actions"><a class="btn danger" href="tel:112">'+L.call+'</a><button class="btn secondary" data-close-emergency>'+L.close+'</button></div></div></div>'); modal=$('#emergencyModal'); }
+ $('#emergencyBody').innerHTML='<p><b>'+L.accommodation+':</b><br>'+APP_DATA.accommodation.name+', '+APP_DATA.accommodation.address+'</p><p><b>'+L.gps+':</b><br>'+loc+'</p><p><b>'+L.nearestParking+':</b><br>'+rec.hike.parking.name+'<br>'+rec.hike.parking.lat.toFixed(5)+', '+rec.hike.parking.lon.toFixed(5)+'</p><p>'+L.danger+'</p><button class="btn secondary" data-get-gps><i class="fa-solid fa-location-crosshairs"></i>'+L.gpsAsk+'</button>';
+ modal.classList.add('active');
+}
 
 function renderDetail(id, keepScroll=false){
  state.currentDetail = id;
@@ -1109,9 +1214,16 @@ function renderExtras(){
 document.addEventListener('click', async e => {
  const tab = e.target.closest('[data-tab]')?.dataset.tab; if(tab) { e.preventDefault(); show(tab); }
  const lang = e.target.closest('[data-lang]')?.dataset.lang; if(lang) setLang(lang);
+ const energy = e.target.closest('[data-energy]')?.dataset.energy; if(energy) { state.energy=energy; localStorage.setItem('bohinj-energy', energy); state.recommendation=recommendHike(); renderDashboard(); }
+ if(e.target.closest('[data-open-rec]') || e.target.closest('[data-start-plan]')) { const rec=state.recommendation || recommendHike(); renderDetail(rec.hike.id); }
+ if(e.target.closest('[data-emergency]')) openEmergencyModal();
+ if(e.target.closest('[data-close-emergency]')) $('#emergencyModal')?.classList.remove('active');
+ if(e.target.closest('[data-get-gps]')) {
+   if(navigator.geolocation) navigator.geolocation.getCurrentPosition(pos => { state.gps={latitude:pos.coords.latitude, longitude:pos.coords.longitude}; openEmergencyModal(); }, () => openEmergencyModal(), {enableHighAccuracy:true, timeout:8000});
+ }
  if(e.target.closest('[data-action="install"]')) { if(state.deferredInstall){ state.deferredInstall.prompt(); } else { alert(t().installHelp); } }
 });
-renderChrome(); renderHome(); renderExtras();
+renderChrome(); state.recommendation=recommendHike(); renderDashboard(); renderHome(); renderExtras(); loadWeather();
 </script>
 </body></html>`;
 }
@@ -1119,7 +1231,7 @@ renderChrome(); renderHome(); renderExtras();
 function makeServiceWorker() {
   const galleryAssets = hikes.flatMap(h => (h.gallery || []).map(item => item.asset));
   const assets = ['index.html','manifest.json',...hikes.map(h=>h.gpx),...hikes.map(h=>h.image),...galleryAssets,'icons/icon-192.svg','icons/icon-512.svg'];
-  return `const CACHE='bohinj-family-hikes-v4-trip-galleries';
+  return `const CACHE='bohinj-family-hikes-v5-vacation-dashboard';
 const ASSETS=${JSON.stringify(assets)};
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
