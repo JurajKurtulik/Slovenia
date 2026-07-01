@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const outDir = process.cwd();
 const imgDir = path.join(outDir, 'images');
@@ -11,6 +12,7 @@ fs.mkdirSync(iconDir, { recursive: true });
 for (const file of fs.readdirSync(iconDir)) fs.unlinkSync(path.join(iconDir, file));
 
 const ACCOMMODATION = { name: 'Apartments Lake Bohinj', lat: 46.277735, lon: 13.836426, address: 'Ukanc 78, 4265 Bohinjsko Jezero' };
+const GLOBAL_GALLERY_HASHES = new Set();
 
 const hikes = [
   {
@@ -577,6 +579,165 @@ async function downloadPhoto(hike) {
 }
 
 async function downloadGallery(hike, targetCount = 7) {
+{
+  const curatedGalleryFiles = {
+    'savica-lakeshore': [
+      'Bohinj Savica-Wasserfall 1.JPG',
+      'Bohinj Savica-Wasserfall 2.JPG',
+      'Bohinj Savica-Wasserfall 3.JPG',
+      '2025 View from Savica waterfall towards the lake.jpg',
+      'An afternoon at lake Bohinj.jpg',
+      'Ausblick Bohinj jezero (27169249907).jpg',
+      'Ukanc - slap Savica.jpg',
+      'Lake Bohinj.jpg'
+    ],
+    'vogel-panorama': [
+      'Triglav-izVogla.jpg',
+      'Vogel2.jpg',
+      'Vogel3.JPG',
+      'Vogel4.jpg',
+      'Slovenia-41 (40113769855).jpg',
+      'Berg Panorama mit Bohinjsko jezero im Hintergrund (51588899882).jpg',
+      'Bergpanorama mit Bohinjsko jezero im Hintergrund (51589730876).jpg'
+    ],
+    'mostnica-voje': [
+      'Mostnica 2.jpg',
+      'Mostnica 3.jpg',
+      'Mostnica river.jpg',
+      'Mostnica-Voje2.JPG',
+      'Mostnica.jpg',
+      'Dolina Voje.jpg',
+      'Tosc-Voje2.JPG',
+      'Mostnica and hill.jpg'
+    ],
+    'planina-blato-jezeru': [
+      'Planinska pot.jpg',
+      'Cow on the way to the Double lake in the Valley of the seven lakes in Triglav National Park.jpg',
+      'Alpine landscape panorama in the evening (52340854025).jpg',
+      'Autumn scene in the Bohinj Valley 31102016-002.jpg',
+      'Mountain pastures at Pokljuka plateau, Julian alps (52339467762).jpg',
+      'Autumn in the valley of the seven lakes in Julian Alps.jpg',
+      'Panorama of the valley of the Triglav mountain massif.jpg'
+    ],
+    'planina-zajamniki': [
+      'Mountain pastures at Pokljuka plateau, Julian alps (52339467762).jpg',
+      'Mountain pastures at Pokljuka plateau, Julian alps (52340727204).jpg',
+      'Beautiful view of traditional wooden cabins in the idyllic Slovenian mountains (52340853580).jpg',
+      'Long asphalt countryside road between spruce forest trees. Amazing forest landscape, Pokljuka plateau, Slovenia in summer season. Low angle, long shot (52340856850).jpg',
+      'Pokljuka (12912100613).jpg',
+      'Asphalt road under pokljuka in autumn (52340663173).jpg',
+      'Alpine landscape panorama in the evening (52340854025).jpg'
+    ],
+    'pericnik-waterfall': [
+      'BurgerPericnikPoleti.jpg',
+      '2016 Peričnik Falls.JPG',
+      'Cascate Peričnik (48681642918).jpg',
+      'Cascate Peričnik (48681682878).jpg',
+      'Cascate Peričnik (48681979136).jpg',
+      'Morning Peričnik.jpg',
+      'Pericnik falls.jpg',
+      'Frozen Peričnik waterfall in the middle of the Alps.jpg'
+    ]
+  };
+  const peoplePattern = /(couple|person|people|portrait|selfie|hiking in|tourist|woman|man|child|children|group)/i;
+  const dir = path.join(galleryDir, hike.id);
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.mkdirSync(dir, { recursive: true });
+
+  const gallery = [];
+  const seenHashes = new Set();
+  let index = 1;
+  for (const title of curatedGalleryFiles[hike.id] || []) {
+    if (gallery.length >= targetCount) break;
+    if (peoplePattern.test(title)) continue;
+    try {
+      await sleep(850);
+      const url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(title)}?width=500`;
+      const res = await fetch(url, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } });
+      const type = res.headers.get('content-type') || '';
+      if (!res.ok || !type.startsWith('image/')) continue;
+      const buf = Buffer.from(await res.arrayBuffer());
+      if (buf.length < 1000) continue;
+      const hash = crypto.createHash('sha256').update(buf).digest('hex');
+      if (seenHashes.has(hash) || GLOBAL_GALLERY_HASHES.has(hash)) continue;
+      seenHashes.add(hash);
+      GLOBAL_GALLERY_HASHES.add(hash);
+      const ext = type.includes('png') ? 'png' : type.includes('webp') ? 'webp' : 'jpg';
+      const filename = `${String(index).padStart(2, '0')}-${hike.id}.${ext}`;
+      const rel = `images/gallery/${hike.id}/${filename}`;
+      fs.writeFileSync(path.join(outDir, rel), buf);
+      gallery.push({ asset: rel, title });
+      index++;
+    } catch (e) {
+      console.warn(`Curated gallery image failed for ${hike.id}: ${title}: ${e.message}`);
+    }
+  }
+
+  const openverseQueries = {
+    'savica-lakeshore': ['Savica waterfall Bohinj', 'Lake Bohinj Ukanc'],
+    'vogel-panorama': ['Vogel Bohinj', 'Lake Bohinj from Vogel'],
+    'mostnica-voje': ['Mostnica', 'Korita Mostnice', 'Voje Bohinj'],
+    'planina-blato-jezeru': ['Planina pri Jezeru', 'Bohinj alpine pasture', 'Triglav Lakes Valley'],
+    'planina-zajamniki': ['Planina Zajamniki', 'Pokljuka alpine pasture', 'Zajamniki'],
+    'pericnik-waterfall': ['Pericnik waterfall Slovenia', 'Slap Peričnik', 'Vrata Valley waterfall']
+  };
+  for (const query of openverseQueries[hike.id] || []) {
+    if (gallery.length >= targetCount) break;
+    try {
+      await sleep(850);
+      const api = `https://api.openverse.engineering/v1/images/?q=${encodeURIComponent(query)}&page_size=12`;
+      const res = await fetch(api, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } });
+      if (!res.ok) continue;
+      const data = await res.json();
+      for (const result of data.results || []) {
+        if (gallery.length >= targetCount) break;
+        const title = result.title || query;
+        if (peoplePattern.test(title) || !result.url) continue;
+        try {
+          await sleep(450);
+          const imageRes = await fetch(result.url, { headers: { 'User-Agent': 'SloveniaHikesFamilyApp/1.0' } });
+          const type = imageRes.headers.get('content-type') || '';
+          if (!imageRes.ok || !type.startsWith('image/')) continue;
+          const buf = Buffer.from(await imageRes.arrayBuffer());
+          if (buf.length < 1000) continue;
+          const hash = crypto.createHash('sha256').update(buf).digest('hex');
+          if (seenHashes.has(hash) || GLOBAL_GALLERY_HASHES.has(hash)) continue;
+          seenHashes.add(hash);
+          GLOBAL_GALLERY_HASHES.add(hash);
+          const ext = type.includes('png') ? 'png' : type.includes('webp') ? 'webp' : 'jpg';
+          const filename = `${String(index).padStart(2, '0')}-${hike.id}-open.${ext}`;
+          const rel = `images/gallery/${hike.id}/${filename}`;
+          fs.writeFileSync(path.join(outDir, rel), buf);
+          gallery.push({ asset: rel, title });
+          index++;
+        } catch (e) {
+          console.warn(`Openverse image failed for ${hike.id}: ${title}: ${e.message}`);
+        }
+      }
+    } catch (e) {
+      console.warn(`Openverse search failed for ${hike.id}: ${query}: ${e.message}`);
+    }
+  }
+
+  if (gallery.length < 5 && hike.image && !hike.image.endsWith('.svg')) {
+    try {
+      const buf = fs.readFileSync(path.join(outDir, hike.image));
+      const hash = crypto.createHash('sha256').update(buf).digest('hex');
+      if (!seenHashes.has(hash) && !GLOBAL_GALLERY_HASHES.has(hash)) {
+        GLOBAL_GALLERY_HASHES.add(hash);
+        const ext = path.extname(hike.image) || '.jpg';
+        const rel = `images/gallery/${hike.id}/${String(index).padStart(2, '0')}-${hike.id}-main${ext}`;
+        fs.writeFileSync(path.join(outDir, rel), buf);
+        gallery.push({ asset: rel, title: hike.title });
+      }
+    } catch (e) {
+      console.warn(`Main image fallback failed for ${hike.id}: ${e.message}`);
+    }
+  }
+  hike.gallery = gallery.slice(0, 10);
+  return;
+}
+
   const forcedGalleryFiles = {
     'savica-lakeshore': [
       'Bohinj Savica-Wasserfall 1.JPG',
